@@ -1,0 +1,31 @@
+{
+	"name": "@monorepo-private/assert",
+	"version": "0.0.1",
+	"private": true,
+	"source": "module/src/v2/index.ts",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./module/src/v2/index.ts",
+		"./v1": "./module/src/v1/_entrypoint.ts"
+	},
+	"scripts": {
+		"check": "run-s test check--ts",
+		"check--ts": "echo \"@monorepo-private/assert\" && tsc --noEmit",
+		"check--ts--watch": "tsc --noEmit --watch",
+		"dev": "run-s check--ts--watch",
+		"test": "node --experimental-strip-types ./node_modules/.bin/mocha -- --bail --config ./node_modules/@offirmo/unit-test-toolbox/module/mocharc.json ./node_modules/@offirmo/unit-test-toolbox/module/mocha-chai-init-node.mjs './module/src/v2/**/*.tests.ts'"
+	},
+	"dependencies": {
+		"tiny-invariant": "^1"
+	},
+	"devDependencies": {
+		"@monorepo-private/config--typescript": "workspace:*",
+		"npm-run-all": "^4",
+		"tslib": "^2",
+		"typescript": "^6"
+	},
+	"peerDependencies": {
+		"tslib": "^2"
+	}
+}

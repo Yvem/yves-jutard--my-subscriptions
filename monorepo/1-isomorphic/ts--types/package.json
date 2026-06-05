@@ -1,0 +1,30 @@
+{
+	"name": "@monorepo-private/ts--types",
+	"version": "0.0.1",
+	"private": true,
+	"description": "TypeScript base types definitions",
+	"source": "module/index.ts",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./module/index.ts"
+	},
+	"scripts": {
+		"check": "run-s check--ts",
+		"check--ts": "echo \"@monorepo-private/ts--types\" && tsc --noEmit",
+		"check--ts--watch": "tsc --noEmit --watch",
+		"dev": "run-s check--ts--watch"
+	},
+	"dependencies": {
+		"@monorepo-private/assert": "workspace:*"
+	},
+	"devDependencies": {
+		"@monorepo-private/config--typescript": "workspace:*",
+		"npm-run-all": "^4",
+		"tslib": "^2",
+		"typescript": "^6"
+	},
+	"peerDependencies": {
+		"tslib": "^2"
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"name": "@monorepo-private/config--typescript",
+	"version": "0.0.1",
+	"private": true,
+	"source": "module/src/index.ts",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./module/src/index.ts",
+		"./module/src/current/isomorphic/tsconfig.json": "./module/src/current/isomorphic/tsconfig.json",
+		"./module/src/current/node/tsconfig.json": "./module/src/current/node/tsconfig.json",
+		"./module/src/current/dom/tsconfig.json": "./module/src/current/dom/tsconfig.json"
+	},
+	"scripts": {
+		"check": "run-s check--ts",
+		"check--ts": "echo \"@monorepo-private/config--typescript\" && tsc --noEmit",
+		"check--ts--watch": "tsc --noEmit --watch",
+		"dev": "run-s check--ts--watch"
+	},
+	"dependencies": {
+		"@total-typescript/ts-reset": "^0.6",
+		"@tsconfig/node-ts": "^23",
+		"@tsconfig/node24": "^24",
+		"@tsconfig/strictest": "^2"
+	},
+	"devDependencies": {
+		"@types/node": "^24",
+		"npm-run-all": "^4",
+		"tslib": "^2",
+		"typescript": "^6"
+	},
+	"peerDependencies": {
+		"tslib": "^2"
+	}
+}

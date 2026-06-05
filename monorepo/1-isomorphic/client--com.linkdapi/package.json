@@ -1,0 +1,33 @@
+{
+	"name": "@monorepo-private/client--com.linkdapi",
+	"version": "0.0.1",
+	"private": true,
+	"description": "client for https://linkdapi.com/",
+	"source": "module/src/api/v1/index.ts",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./module/src/api/v1/index.ts"
+	},
+	"scripts": {
+		"check": "run-s test check--ts",
+		"check--ts": "echo \"@monorepo-private/client--com.linkdapi\" && tsc --noEmit",
+		"check--ts--watch": "tsc --noEmit --watch",
+		"dev": "run-s check--ts--watch",
+		"test": "node --experimental-strip-types ./node_modules/.bin/mocha -- --bail --config ./node_modules/@offirmo/unit-test-toolbox/module/mocharc.json ./node_modules/@offirmo/unit-test-toolbox/module/mocha-chai-init-node.mjs './module/src/api/v1/**/*.tests.ts'"
+	},
+	"dependencies": {
+		"@monorepo-private/assert": "workspace:*",
+		"@monorepo-private/http-client": "workspace:*"
+	},
+	"devDependencies": {
+		"@monorepo-private/config--typescript": "workspace:*",
+		"@monorepo-private/ts--types": "workspace:*",
+		"npm-run-all": "^4",
+		"tslib": "^2",
+		"typescript": "^6"
+	},
+	"peerDependencies": {
+		"tslib": "^2"
+	}
+}

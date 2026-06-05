@@ -1,0 +1,31 @@
+{
+	"name": "@monorepo-private/http-client",
+	"version": "0.0.1",
+	"private": true,
+	"source": "module/src/index.ts",
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./module/src/index.ts"
+	},
+	"scripts": {
+		"check": "run-s test check--ts",
+		"check--ts": "echo \"@monorepo-private/http-client\" && tsc --noEmit",
+		"check--ts--watch": "tsc --noEmit --watch",
+		"dev": "run-s check--ts--watch",
+		"test": "node --experimental-strip-types ./node_modules/.bin/mocha -- --bail --config ./node_modules/@offirmo/unit-test-toolbox/module/mocharc.json ./node_modules/@offirmo/unit-test-toolbox/module/mocha-chai-init-node.mjs './module/src/**/*.tests.ts'"
+	},
+	"dependencies": {
+		"@monorepo-private/assert": "workspace:*"
+	},
+	"devDependencies": {
+		"@monorepo-private/config--typescript": "workspace:*",
+		"@monorepo-private/ts--types": "workspace:*",
+		"npm-run-all": "^4",
+		"tslib": "^2",
+		"typescript": "^6"
+	},
+	"peerDependencies": {
+		"tslib": "^2"
+	}
+}

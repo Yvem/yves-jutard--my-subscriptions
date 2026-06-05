@@ -1,0 +1,11 @@
+{
+	_overrides: {
+		files: {
+			packageᐧjson: {
+				"|exports|./module/src/current/isomorphic/tsconfig.json": "./module/src/current/isomorphic/tsconfig.json",
+				"|exports|./module/src/current/node/tsconfig.json": "./module/src/current/node/tsconfig.json",
+				"|exports|./module/src/current/dom/tsconfig.json": "./module/src/current/dom/tsconfig.json",
+			},
+		},
+	},
+}
