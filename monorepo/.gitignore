@@ -5,6 +5,7 @@
 ## contains auto-generated content from @infinite-monorepo/plugin--pnpm
 ## contains auto-generated content from @infinite-monorepo/plugin--typescript
 ## https://www.atlassian.com/git/tutorials/saving-changes/gitignore#git-ignore-patterns
+!.env.example
 *.local
 *.log
 *.map
@@ -12,23 +13,23 @@
 *.vars
 *local.*
 .cache/
+.clerk/
 .env
+.env*
 .env.*
 .mise/
+.next/
 .parcel
 .parcel-cache
+.pnpm-debug.log*
+.turbo/
+.vercel
+/coverage
+build/
 dist/
 logs/
+next-env.d.ts
 node_modules/
+out/
 tmp-*/
 tmp/
-/coverage
-.next/
-out/
-build/
-.pnpm-debug.log*
-.env*
-!.env.example
-.vercel
-next-env.d.ts
-.clerk/

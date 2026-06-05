@@ -18,7 +18,9 @@ Persistent UI components whose state the AI can read and update through auto-gen
 
 ## Overview
 
-An interactable is a React component with state that is shared between the user and the AI. State persists across messages, supports partial updates, and the framework auto-registers a tool so the model can change it. Unlike a tool UI (which only renders a tool call), an interactable lives anywhere in your app and stays mounted across turns.
+An interactable is a React component with state that is shared between the user and the AI. State persists across
+messages, supports partial updates, and the framework auto-registers a tool so the model can change it. Unlike a tool UI
+(which only renders a tool call), an interactable lives anywhere in your app and stays mounted across turns.
 
 All APIs come from `@assistant-ui/react`.
 
@@ -30,7 +32,7 @@ import {
   AssistantRuntimeProvider,
   useAssistantInteractable,
   useInteractableState,
-} from "@assistant-ui/react";
+} from "@assistant-ui/react"
 ```
 
 ## Register the scope
@@ -41,13 +43,13 @@ Add the `Interactables()` scope to the runtime via `useAui`, then pass the resul
 function MyRuntimeProvider({ children }: { children: React.ReactNode }) {
   const aui = useAui({
     interactables: Interactables(),
-  });
+  })
 
   return (
     <AssistantRuntimeProvider aui={aui} runtime={runtime}>
       {children}
     </AssistantRuntimeProvider>
-  );
+  )
 }
 ```
 
@@ -57,7 +59,7 @@ Combine with other scopes such as tools:
 const aui = useAui({
   tools: Tools({ toolkit: myToolkit }),
   interactables: Interactables(),
-});
+})
 ```
 
 The interactable component can live anywhere inside the provider, including outside the chat panel.
@@ -71,31 +73,30 @@ function App() {
         <TaskBoard />
       </div>
     </MyRuntimeProvider>
-  );
+  )
 }
 ```
 
 ## useAssistantInteractable
 
-Registers an interactable and returns its instance `id`. Define `stateSchema` and `initialState` outside the component (or memoize them); new object identities on every render trigger re-registration and reset state.
+Registers an interactable and returns its instance `id`. Define `stateSchema` and `initialState` outside the component
+(or memoize them); new object identities on every render trigger re-registration and reset state.
 
 ```tsx
-import { z } from "zod";
+import { z } from "zod"
 
 const taskBoardSchema = z.object({
-  tasks: z.array(
-    z.object({ id: z.string(), title: z.string(), done: z.boolean() }),
-  ),
-});
+  tasks: z.array(z.object({ id: z.string(), title: z.string(), done: z.boolean() })),
+})
 
-const taskBoardInitialState = { tasks: [] };
+const taskBoardInitialState = { tasks: [] }
 
 function TaskBoard() {
   const id = useAssistantInteractable("taskBoard", {
     description: "A task board showing the user's tasks",
     stateSchema: taskBoardSchema,
     initialState: taskBoardInitialState,
-  });
+  })
 
   // ...
 }
@@ -105,11 +106,11 @@ Config fields:
 
 ```ts
 interface InteractableConfig {
-  description: string;                  // Shown to the AI
-  stateSchema: StandardSchemaV1;        // Zod schema or JSON Schema
-  initialState: unknown;
-  id?: string;                          // Auto-generated if omitted
-  selected?: boolean;                   // Mark as focused at registration time
+  description: string // Shown to the AI
+  stateSchema: StandardSchemaV1 // Zod schema or JSON Schema
+  initialState: unknown
+  id?: string // Auto-generated if omitted
+  selected?: boolean // Mark as focused at registration time
 }
 ```
 
@@ -117,7 +118,8 @@ The first argument (`name`) feeds the auto-generated tool name and is referenced
 
 ## useInteractableState
 
-Reads and writes the state of a registered interactable. The setter behaves like `useState`, accepting a value or an updater function. Pass a `fallback` used before registration completes.
+Reads and writes the state of a registered interactable. The setter behaves like `useState`, accepting a value or an
+updater function. Pass a `fallback` used before registration completes.
 
 ```tsx
 function TaskBoard() {
@@ -125,9 +127,9 @@ function TaskBoard() {
     description: "A task board showing the user's tasks",
     stateSchema: taskBoardSchema,
     initialState: taskBoardInitialState,
-  });
+  })
 
-  const [state, { setState }] = useInteractableState(id, taskBoardInitialState);
+  const [state, { setState }] = useInteractableState(id, taskBoardInitialState)
 
   return (
     <ul>
@@ -139,9 +141,7 @@ function TaskBoard() {
               checked={task.done}
               onChange={() =>
                 setState((prev) => ({
-                  tasks: prev.tasks.map((t) =>
-                    t.id === task.id ? { ...t, done: !t.done } : t,
-                  ),
+                  tasks: prev.tasks.map((t) => (t.id === task.id ? { ...t, done: !t.done } : t)),
                 }))
               }
             />
@@ -150,15 +150,14 @@ function TaskBoard() {
         </li>
       ))}
     </ul>
-  );
+  )
 }
 ```
 
 The second tuple element exposes the full control surface:
 
 ```ts
-const [state, { setState, setSelected, isPending, error, flush }] =
-  useInteractableState(id, fallback);
+const [state, { setState, setSelected, isPending, error, flush }] = useInteractableState(id, fallback)
 ```
 
 - `setState(value | (prev) => next)`: update state; the new value is also sent to the model context for the next turn.
@@ -181,7 +180,7 @@ The tool uses a partial version of `stateSchema`: every field becomes optional, 
 ```ts
 // Current state: { title: "My Note", content: "Hello", color: "yellow" }
 // AI calls:
-update_note({ color: "blue" });
+update_note({ color: "blue" })
 // Result: { title: "My Note", content: "Hello", color: "blue" }
 ```
 
@@ -196,13 +195,13 @@ const noteSchema = z.object({
   title: z.string(),
   content: z.string(),
   color: z.enum(["yellow", "blue", "green", "pink"]),
-});
+})
 
 const noteInitialState = {
   title: "New Note",
   content: "",
   color: "yellow" as const,
-};
+}
 
 function NoteCard({ noteId }: { noteId: string }) {
   useAssistantInteractable("note", {
@@ -210,10 +209,10 @@ function NoteCard({ noteId }: { noteId: string }) {
     description: "A sticky note",
     stateSchema: noteSchema,
     initialState: noteInitialState,
-  });
+  })
 
-  const [state] = useInteractableState(noteId, noteInitialState);
-  return <div>{state.title}</div>;
+  const [state] = useInteractableState(noteId, noteInitialState)
+  return <div>{state.title}</div>
 }
 
 function Notes() {
@@ -222,25 +221,24 @@ function Notes() {
       <NoteCard noteId="note-1" /> {/* update_note_note-1 */}
       <NoteCard noteId="note-2" /> {/* update_note_note-2 */}
     </>
-  );
+  )
 }
 ```
 
-When a component unmounts, its tool is removed from the AI's list but its state is preserved in the scope. Remounting with the same `name` and `id` restores the preserved state instead of resetting to `initialState`, which handles Strict Mode double-mounts and tab switches.
+When a component unmounts, its tool is removed from the AI's list but its state is preserved in the scope. Remounting
+with the same `name` and `id` restores the preserved state instead of resetting to `initialState`, which handles Strict
+Mode double-mounts and tab switches.
 
 ## Selection
 
-Marking an interactable selected tells the model to prioritize it; the AI sees `(SELECTED)` next to it in the system prompt.
+Marking an interactable selected tells the model to prioritize it; the AI sees `(SELECTED)` next to it in the system
+prompt.
 
 ```tsx
 function NoteCard({ noteId }: { noteId: string }) {
-  const [state, { setSelected }] = useInteractableState(noteId, noteInitialState);
+  const [state, { setSelected }] = useInteractableState(noteId, noteInitialState)
 
-  return (
-    <div onClick={() => setSelected(true)}>
-      {state.title}
-    </div>
-  );
+  return <div onClick={() => setSelected(true)}>{state.title}</div>
 }
 ```
 
@@ -248,7 +246,8 @@ Selection can also be set at registration with `config.selected: true`.
 
 ## Streaming updates
 
-State updates progressively as the AI streams tool arguments, so fields appear one at a time. Detect an in-progress run with `useAuiState` to show skeleton UI.
+State updates progressively as the AI streams tool arguments, so fields appear one at a time. Detect an in-progress run
+with `useAuiState` to show skeleton UI.
 
 ```tsx
 function TaskBoard() {
@@ -256,39 +255,40 @@ function TaskBoard() {
     description: "A task board",
     stateSchema: taskBoardSchema,
     initialState: taskBoardInitialState,
-  });
-  const [state] = useInteractableState(id, taskBoardInitialState);
+  })
+  const [state] = useInteractableState(id, taskBoardInitialState)
 
-  const isRunning = useAuiState((s) => s.thread.isRunning);
-  const isLoading = isRunning && state.tasks.length === 0;
+  const isRunning = useAuiState((s) => s.thread.isRunning)
+  const isLoading = isRunning && state.tasks.length === 0
 
-  if (isLoading) return <Skeleton />;
-  return <TaskList tasks={state.tasks} />;
+  if (isLoading) return <Skeleton />
+  return <TaskList tasks={state.tasks} />
 }
 ```
 
 ## Persistence
 
-State is in-memory by default. Register a persistence adapter on the scope to save it; importing previously saved state rehydrates the interactables.
+State is in-memory by default. Register a persistence adapter on the scope to save it; importing previously saved state
+rehydrates the interactables.
 
 ```tsx
 function PersistenceSetup() {
-  const aui = useAui();
+  const aui = useAui()
 
   useEffect(() => {
     aui.interactables().setPersistenceAdapter({
       save: async (state) => {
-        localStorage.setItem("interactables", JSON.stringify(state));
+        localStorage.setItem("interactables", JSON.stringify(state))
       },
-    });
+    })
 
-    const saved = localStorage.getItem("interactables");
+    const saved = localStorage.getItem("interactables")
     if (saved) {
-      aui.interactables().importState(JSON.parse(saved));
+      aui.interactables().importState(JSON.parse(saved))
     }
-  }, [aui]);
+  }, [aui])
 
-  return null;
+  return null
 }
 ```
 
@@ -301,14 +301,16 @@ function PersistenceSetup() {
 Read or replace the full snapshot directly through the scope.
 
 ```tsx
-const aui = useAui();
+const aui = useAui()
 
-const snapshot = aui.interactables().exportState();
+const snapshot = aui.interactables().exportState()
 // => { "note-1": { name: "note", state: { title: "Hello" } }, ... }
 
-aui.interactables().importState(snapshot);
+aui.interactables().importState(snapshot)
 ```
 
 ## Schema evolution
 
-Changing a `stateSchema` after persisting state can cause silent mismatches when old data is imported. Mitigate by versioning the storage key (for example `taskBoard_v2`), namespacing by a schema hash on breaking changes, or running a migration step inside your `importState` call.
+Changing a `stateSchema` after persisting state can cause silent mismatches when old data is imported. Mitigate by
+versioning the storage key (for example `taskBoard_v2`), namespacing by a schema hash on breaking changes, or running a
+migration step inside your `importState` call.

@@ -1,2 +1,3 @@
 # yves-jutard--my-subscriptions
-Demo
+
+Demo app

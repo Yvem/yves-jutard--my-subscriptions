@@ -4,26 +4,27 @@ AI SDK compatible streaming format.
 
 ## Overview
 
-Data Stream is the underlying format used by Vercel AI SDK. For assistant-ui, use `toUIMessageStreamResponse()` (preferred) which builds on Data Stream with additional features.
+Data Stream is the underlying format used by Vercel AI SDK. For assistant-ui, use `toUIMessageStreamResponse()`
+(preferred) which builds on Data Stream with additional features.
 
 ## Usage
 
 ### Server (AI SDK)
 
 ```ts
-import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai"
+import { streamText } from "ai"
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages } = await req.json()
 
   const result = streamText({
     model: openai("gpt-4o"),
     messages,
-  });
+  })
 
   // Preferred for assistant-ui
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse()
 
   // Or use toDataStreamResponse() for raw Data Stream
   // return result.toDataStreamResponse();
@@ -33,36 +34,36 @@ export async function POST(req: Request) {
 ### Custom Backend (Data Stream SSE)
 
 ```ts
-import { createAssistantStreamResponse } from "assistant-stream";
+import { createAssistantStreamResponse } from "assistant-stream"
 
 export async function POST(req: Request) {
   return createAssistantStreamResponse(async (stream) => {
-    stream.appendText("Hello ");
-    stream.appendText("world!");
+    stream.appendText("Hello ")
+    stream.appendText("world!")
 
     const tool = stream.addToolCallPart({
       toolCallId: "call_123",
       toolName: "search",
-    });
-    tool.argsText.append('{"query":"weather NYC"}');
-    tool.argsText.close();
-    tool.setResponse({ result: { temperature: 22 } });
+    })
+    tool.argsText.append('{"query":"weather NYC"}')
+    tool.argsText.close()
+    tool.setResponse({ result: { temperature: 22 } })
 
-    stream.close();
-  });
+    stream.close()
+  })
 }
 ```
 
 ### Decoding
 
 ```ts
-import { AssistantStream, DataStreamDecoder } from "assistant-stream";
+import { AssistantStream, DataStreamDecoder } from "assistant-stream"
 
-const stream = AssistantStream.fromResponse(response, new DataStreamDecoder());
+const stream = AssistantStream.fromResponse(response, new DataStreamDecoder())
 
 for await (const chunk of stream) {
-  if (chunk.type === "text-delta") console.log("Text:", chunk.textDelta);
-  if (chunk.type === "result") console.log("Result:", chunk.result);
+  if (chunk.type === "text-delta") console.log("Text:", chunk.textDelta)
+  if (chunk.type === "result") console.log("Result:", chunk.result)
 }
 ```
 
@@ -100,6 +101,7 @@ d:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":0}}
 ```
 
 Each line:
+
 - `0:` - Text content
 - `9:` - Tool call
 - `b:` - Tool call start
@@ -115,9 +117,9 @@ Each line:
 ## Integration with useChatRuntime
 
 ```tsx
-import { useChatRuntime, AssistantChatTransport } from "@assistant-ui/react-ai-sdk";
-import { AssistantRuntimeProvider } from "@assistant-ui/react";
-import { Thread } from "@/components/assistant-ui/thread";
+import { useChatRuntime, AssistantChatTransport } from "@assistant-ui/react-ai-sdk"
+import { AssistantRuntimeProvider } from "@assistant-ui/react"
+import { Thread } from "@/components/assistant-ui/thread"
 
 function Chat() {
   const runtime = useChatRuntime({
@@ -125,12 +127,12 @@ function Chat() {
       api: "/api/chat",
     }),
     // Data Stream format is automatically handled
-  });
+  })
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <Thread />
     </AssistantRuntimeProvider>
-  );
+  )
 }
 ```

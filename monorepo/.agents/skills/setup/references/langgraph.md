@@ -12,63 +12,61 @@ npm install @assistant-ui/react @assistant-ui/react-langgraph @langchain/langgra
 
 ```ts
 // lib/chatApi.ts
-import { Client } from "@langchain/langgraph-sdk";
+import { Client } from "@langchain/langgraph-sdk"
 
 export const createClient = () =>
   new Client({
     apiUrl: process.env.NEXT_PUBLIC_LANGGRAPH_API_URL ?? "http://localhost:8123",
-  });
+  })
 ```
 
 ## Basic Setup
 
-`useLangGraphRuntime` takes a `stream` callback plus optional `create` / `load` / `delete` handlers for thread lifecycle. Build the stream with `unstable_createLangGraphStream`.
+`useLangGraphRuntime` takes a `stream` callback plus optional `create` / `load` / `delete` handlers for thread
+lifecycle. Build the stream with `unstable_createLangGraphStream`.
 
 ```tsx
-"use client";
+"use client"
 
-import { useMemo } from "react";
-import { AssistantRuntimeProvider } from "@assistant-ui/react";
-import { Thread } from "@/components/assistant-ui/thread";
+import { useMemo } from "react"
+import { AssistantRuntimeProvider } from "@assistant-ui/react"
+import { Thread } from "@/components/assistant-ui/thread"
 import {
   unstable_createLangGraphStream,
   useLangGraphRuntime,
   type LangChainMessage,
-} from "@assistant-ui/react-langgraph";
-import { createClient } from "@/lib/chatApi";
+} from "@assistant-ui/react-langgraph"
+import { createClient } from "@/lib/chatApi"
 
-const ASSISTANT_ID = process.env.NEXT_PUBLIC_LANGGRAPH_ASSISTANT_ID!;
+const ASSISTANT_ID = process.env.NEXT_PUBLIC_LANGGRAPH_ASSISTANT_ID!
 
 export function MyAssistant() {
-  const client = useMemo(() => createClient(), []);
-  const stream = useMemo(
-    () => unstable_createLangGraphStream({ client, assistantId: ASSISTANT_ID }),
-    [client],
-  );
+  const client = useMemo(() => createClient(), [])
+  const stream = useMemo(() => unstable_createLangGraphStream({ client, assistantId: ASSISTANT_ID }), [client])
 
   const runtime = useLangGraphRuntime({
     unstable_allowCancellation: true,
     stream,
     create: async () => {
-      const { thread_id } = await client.threads.create();
-      return { externalId: thread_id };
+      const { thread_id } = await client.threads.create()
+      return { externalId: thread_id }
     },
     load: async (externalId) => {
       const state = await client.threads.getState<{
-        messages: LangChainMessage[];
-      }>(externalId);
+        messages: LangChainMessage[]
+      }>(externalId)
       return {
         messages: state.values.messages,
         interrupts: state.tasks[0]?.interrupts,
-      };
+      }
     },
-  });
+  })
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <Thread />
     </AssistantRuntimeProvider>
-  );
+  )
 }
 ```
 
@@ -105,14 +103,16 @@ const runtime = useLangGraphRuntime({
     onError: (error) => {},
     onCustomEvent: (event, options) => {},
   },
-});
+})
 ```
 
-`useLangGraphRuntime` no longer takes `threadId` or `convertMessage`. Thread identity is handled by `create`/`load`/`delete` (the v0.7 migration removed `onSwitchToThread`; use `load` instead).
+`useLangGraphRuntime` no longer takes `threadId` or `convertMessage`. Thread identity is handled by
+`create`/`load`/`delete` (the v0.7 migration removed `onSwitchToThread`; use `load` instead).
 
 ## Custom Stream (Advanced)
 
-Instead of `unstable_createLangGraphStream`, you can pass your own `LangGraphStreamCallback`. It receives the messages and a config object (with `abortSignal`) and yields LangGraph message events:
+Instead of `unstable_createLangGraphStream`, you can pass your own `LangGraphStreamCallback`. It receives the messages
+and a config object (with `abortSignal`) and yields LangGraph message events:
 
 ```tsx
 const runtime = useLangGraphRuntime({
@@ -122,20 +122,20 @@ const runtime = useLangGraphRuntime({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages, config }),
       signal: abortSignal,
-    });
+    })
 
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
+    const reader = response.body?.getReader()
+    const decoder = new TextDecoder()
 
     while (reader) {
-      const { done, value } = await reader.read();
-      if (done) break;
+      const { done, value } = await reader.read()
+      if (done) break
       for (const event of parseLangGraphEvents(decoder.decode(value))) {
-        yield event; // LangGraphMessagesEvent
+        yield event // LangGraphMessagesEvent
       }
     }
   },
-});
+})
 ```
 
 ## With Tool UI
@@ -143,13 +143,13 @@ const runtime = useLangGraphRuntime({
 LangGraph tool calls can have custom UI. Remember the render prop `status` is an object; branch on `status.type`.
 
 ```tsx
-import { makeAssistantToolUI } from "@assistant-ui/react";
+import { makeAssistantToolUI } from "@assistant-ui/react"
 
 const SearchToolUI = makeAssistantToolUI({
   toolName: "tavily_search",
   render: ({ args, result, status }) => {
     if (status.type === "running") {
-      return <div>Searching for: {args.query}...</div>;
+      return <div>Searching for: {args.query}...</div>
     }
     return (
       <div>
@@ -159,9 +159,9 @@ const SearchToolUI = makeAssistantToolUI({
           </a>
         ))}
       </div>
-    );
+    )
   },
-});
+})
 ```
 
 ## Python Backend Example
@@ -189,15 +189,16 @@ app = graph.compile()
 
 ## Thread Persistence
 
-LangGraph handles thread persistence server-side. The `create` handler returns the LangGraph `thread_id` as `externalId`, and `load` rehydrates a thread's messages and interrupts when the user switches to it. Combine with the assistant-ui `ThreadList` (cloud or a remote thread list adapter) to show saved threads.
+LangGraph handles thread persistence server-side. The `create` handler returns the LangGraph `thread_id` as
+`externalId`, and `load` rehydrates a thread's messages and interrupts when the user switches to it. Combine with the
+assistant-ui `ThreadList` (cloud or a remote thread list adapter) to show saved threads.
 
 ## Troubleshooting
 
-**"Stream not yielding events"**
-Ensure your stream yields `LangGraphMessagesEvent` chunks. When using `unstable_createLangGraphStream`, verify `assistantId` matches a graph registered on your LangGraph server.
+**"Stream not yielding events"** Ensure your stream yields `LangGraphMessagesEvent` chunks. When using
+`unstable_createLangGraphStream`, verify `assistantId` matches a graph registered on your LangGraph server.
 
-**"Thread not persisting"**
-LangGraph persistence is server-side. Check that your server is configured with a checkpointer, and that `create`/`load` are wired up.
+**"Thread not persisting"** LangGraph persistence is server-side. Check that your server is configured with a
+checkpointer, and that `create`/`load` are wired up.
 
-**"Tool calls not rendering"**
-Tool names must match between LangGraph and `makeAssistantToolUI`.
+**"Tool calls not rendering"** Tool names must match between LangGraph and `makeAssistantToolUI`.

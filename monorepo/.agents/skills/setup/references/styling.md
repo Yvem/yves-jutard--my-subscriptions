@@ -1,6 +1,7 @@
 # Styling and Customization (shadcn Pattern)
 
-assistant-ui UI components added by `init`/`create`/`add` are local source files. Style and customize them the same way you customize shadcn components: edit local TSX and theme tokens directly.
+assistant-ui UI components added by `init`/`create`/`add` are local source files. Style and customize them the same way
+you customize shadcn components: edit local TSX and theme tokens directly.
 
 ## Where to Customize
 
@@ -11,7 +12,8 @@ assistant-ui UI components added by `init`/`create`/`add` are local source files
 
 ## Theme Tokens (Tailwind v4 + shadcn style)
 
-Components use shadcn theme tokens defined in `app/globals.css` and mapped to Tailwind v4 `@theme` variables. These help maintain a consistent style system.
+Components use shadcn theme tokens defined in `app/globals.css` and mapped to Tailwind v4 `@theme` variables. These help
+maintain a consistent style system.
 
 ```css
 :root {
@@ -25,7 +27,7 @@ Components use shadcn theme tokens defined in `app/globals.css` and mapped to Ta
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.9 0.001 286.0);
+  --primary: oklch(0.9 0.001 286);
   /* ...other theme tokens */
 }
 ```
@@ -36,9 +38,9 @@ Dark mode is class-based: toggling the `dark` class on `<html>` switches shadcn 
 
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "next-themes"
 
-<ThemeProvider attribute="class" defaultTheme="system">
+;<ThemeProvider attribute="class" defaultTheme="system">
   {children}
 </ThemeProvider>
 ```
@@ -62,7 +64,9 @@ import { ThemeProvider } from "next-themes";
 
 ## Component-Level Customization with `cn()`
 
-Use `cn()` when customizing local component styles (including child elements like a `Button` inside `Thread`) so you can layer conditional or external classes without breaking defaults. Keep edits in registry components (`components/assistant-ui/`) and rely on shadcn primitives for consistent composition.
+Use `cn()` when customizing local component styles (including child elements like a `Button` inside `Thread`) so you can
+layer conditional or external classes without breaking defaults. Keep edits in registry components
+(`components/assistant-ui/`) and rely on shadcn primitives for consistent composition.
 
 `cn()` keeps base styles, then resolves conflicts so later classes win.
 
@@ -71,21 +75,18 @@ Use `cn()` when customizing local component styles (including child elements lik
 ```
 
 ```tsx
-<ThreadPrimitive.Root
-  className={cn(
-    "aui-thread-root @container flex h-full flex-col bg-background",
-    className
-  )}
->
+<ThreadPrimitive.Root className={cn("aui-thread-root @container flex h-full flex-col bg-background", className)}>
   {/* ... */}
 </ThreadPrimitive.Root>
 ```
 
 ## Deep UI Control
 
-For building entirely custom layouts, compose directly with `ThreadPrimitive`, `MessagePrimitive`, and `ComposerPrimitive` from `@assistant-ui/react`. See the `/primitives` skill for API details.
+For building entirely custom layouts, compose directly with `ThreadPrimitive`, `MessagePrimitive`, and
+`ComposerPrimitive` from `@assistant-ui/react`. See the `/primitives` skill for API details.
 
 ## Legacy / Deprecated
 
 - Never install `@assistant-ui/styles` or `@assistant-ui/react-ui`, they are deprecated legacy packages.
-- Existing `aui-*` classes in registry components are legacy identifiers — they do not impact styling and can be safely ignored.
+- Existing `aui-*` classes in registry components are legacy identifiers — they do not impact styling and can be safely
+  ignored.

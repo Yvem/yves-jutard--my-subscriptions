@@ -4,7 +4,8 @@ assistant-ui's native streaming protocol.
 
 ## Overview
 
-Assistant Transport is assistant-ui's optimized format with support for all features including reasoning, sources, and complex message structures.
+Assistant Transport is assistant-ui's optimized format with support for all features including reasoning, sources, and
+complex message structures.
 
 ## When to Use
 
@@ -17,35 +18,28 @@ Assistant Transport is assistant-ui's optimized format with support for all feat
 ### Server
 
 ```ts
-import {
-  AssistantStream,
-  AssistantTransportEncoder,
-  createAssistantStreamController,
-} from "assistant-stream";
+import { AssistantStream, AssistantTransportEncoder, createAssistantStreamController } from "assistant-stream"
 
 export async function POST(req: Request) {
-  const [stream, controller] = createAssistantStreamController();
+  const [stream, controller] = createAssistantStreamController()
 
-  controller.appendText("Hello ");
-  controller.appendText("world!");
-  controller.close();
+  controller.appendText("Hello ")
+  controller.appendText("world!")
+  controller.close()
 
-  return AssistantStream.toResponse(stream, new AssistantTransportEncoder());
+  return AssistantStream.toResponse(stream, new AssistantTransportEncoder())
 }
 ```
 
 ### Client
 
 ```ts
-import { AssistantStream, AssistantTransportDecoder } from "assistant-stream";
+import { AssistantStream, AssistantTransportDecoder } from "assistant-stream"
 
-const stream = AssistantStream.fromResponse(
-  response,
-  new AssistantTransportDecoder()
-);
+const stream = AssistantStream.fromResponse(response, new AssistantTransportDecoder())
 
 for await (const chunk of stream) {
-  console.log(chunk);
+  console.log(chunk)
 }
 ```
 
@@ -65,40 +59,36 @@ AssistantStream chunks (decoded from AssistantTransport) match the core types:
 ## Complete Example
 
 ```ts
-import {
-  AssistantStream,
-  AssistantTransportEncoder,
-  createAssistantStreamController,
-} from "assistant-stream";
+import { AssistantStream, AssistantTransportEncoder, createAssistantStreamController } from "assistant-stream"
 
 async function streamResponse(query: string) {
-  const [stream, controller] = createAssistantStreamController();
-  const toolCallId = `tool_${Date.now()}`;
+  const [stream, controller] = createAssistantStreamController()
+  const toolCallId = `tool_${Date.now()}`
 
-  controller.appendText("Based on my search, ");
+  controller.appendText("Based on my search, ")
 
   const tool = controller.addToolCallPart({
     toolCallId,
     toolName: "search",
-  });
-  tool.argsText.append(JSON.stringify({ query }));
-  tool.argsText.close();
+  })
+  tool.argsText.append(JSON.stringify({ query }))
+  tool.argsText.close()
 
-  const searchResult = await performSearch(query);
-  tool.setResponse({ result: searchResult });
+  const searchResult = await performSearch(query)
+  tool.setResponse({ result: searchResult })
 
-  controller.appendText(`here's what I found:\n\n${searchResult.summary}`);
-  controller.close();
+  controller.appendText(`here's what I found:\n\n${searchResult.summary}`)
+  controller.close()
 
-  return AssistantStream.toResponse(stream, new AssistantTransportEncoder());
+  return AssistantStream.toResponse(stream, new AssistantTransportEncoder())
 }
 ```
 
 ## Using with useLocalRuntime
 
 ```tsx
-import { useLocalRuntime } from "@assistant-ui/react";
-import { AssistantStream, AssistantTransportDecoder } from "assistant-stream";
+import { useLocalRuntime } from "@assistant-ui/react"
+import { AssistantStream, AssistantTransportDecoder } from "assistant-stream"
 
 const runtime = useLocalRuntime({
   model: {
@@ -107,26 +97,23 @@ const runtime = useLocalRuntime({
         method: "POST",
         body: JSON.stringify({ messages }),
         signal: abortSignal,
-      });
+      })
 
       let currentTool:
         | {
-            toolCallId: string;
-            toolName: string;
-            args: Record<string, unknown>;
-            argsText: string;
+            toolCallId: string
+            toolName: string
+            args: Record<string, unknown>
+            argsText: string
           }
-        | undefined;
+        | undefined
 
-      const stream = AssistantStream.fromResponse(
-        response,
-        new AssistantTransportDecoder()
-      );
+      const stream = AssistantStream.fromResponse(response, new AssistantTransportDecoder())
 
       for await (const chunk of stream) {
         // Convert AssistantStreamChunk into ChatModelRunResult content parts
         if (chunk.type === "text-delta") {
-          yield { content: [{ type: "text", text: chunk.textDelta }] };
+          yield { content: [{ type: "text", text: chunk.textDelta }] }
         }
 
         // Track current tool-call to attach result to it
@@ -136,8 +123,8 @@ const runtime = useLocalRuntime({
             toolName: chunk.part.toolName,
             args: {},
             argsText: "{}",
-          };
-          yield { content: [currentTool] };
+          }
+          yield { content: [currentTool] }
         }
 
         if (chunk.type === "result" && currentTool) {
@@ -150,11 +137,11 @@ const runtime = useLocalRuntime({
                 isError: chunk.isError,
               },
             ],
-          };
-          currentTool = undefined;
+          }
+          currentTool = undefined
         }
       }
     },
   },
-});
+})
 ```

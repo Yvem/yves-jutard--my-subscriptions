@@ -1,6 +1,8 @@
 # Syntax Highlighting
 
-Code block highlighting for the markdown renderer. Two options: `react-shiki` (recommended) and `@assistant-ui/react-syntax-highlighter` (legacy, may be removed). Both plug in as a `SyntaxHighlighter` component, either globally via `defaultComponents` or per language via `componentsByLanguage`.
+Code block highlighting for the markdown renderer. Two options: `react-shiki` (recommended) and
+`@assistant-ui/react-syntax-highlighter` (legacy, may be removed). Both plug in as a `SyntaxHighlighter` component,
+either globally via `defaultComponents` or per language via `componentsByLanguage`.
 
 ## Contents
 
@@ -15,38 +17,41 @@ Code block highlighting for the markdown renderer. Two options: `react-shiki` (r
 
 ## How it plugs in
 
-`MarkdownTextPrimitive` renders code blocks with the `SyntaxHighlighter` you register. A global one goes in `defaultComponents` (built with `memoizeMarkdownComponents`); language specific ones go in `componentsByLanguage`.
+`MarkdownTextPrimitive` renders code blocks with the `SyntaxHighlighter` you register. A global one goes in
+`defaultComponents` (built with `memoizeMarkdownComponents`); language specific ones go in `componentsByLanguage`.
 
 ```tsx
-import { MarkdownTextPrimitive } from "@assistant-ui/react-markdown";
+import { MarkdownTextPrimitive } from "@assistant-ui/react-markdown"
 
-<MarkdownTextPrimitive
+;<MarkdownTextPrimitive
   remarkPlugins={[remarkGfm]}
   className="aui-md"
   components={defaultComponents}
   componentsByLanguage={{
     mermaid: { SyntaxHighlighter: MermaidDiagram },
   }}
-/>;
+/>
 ```
 
-Note: the package exports the memoization helper as `unstable_memoizeMarkdownComponents`; the generated `markdown-text.tsx` aliases it to `memoizeMarkdownComponents`.
+Note: the package exports the memoization helper as `unstable_memoizeMarkdownComponents`; the generated
+`markdown-text.tsx` aliases it to `memoizeMarkdownComponents`.
 
 ## react-shiki (recommended)
 
-Install via the registry (`https://r.assistant-ui.com/shiki-highlighter.json`), which adds the `react-shiki` package and `/components/assistant-ui/shiki-highlighter.tsx`.
+Install via the registry (`https://r.assistant-ui.com/shiki-highlighter.json`), which adds the `react-shiki` package and
+`/components/assistant-ui/shiki-highlighter.tsx`.
 
 ```tsx
-"use client";
-import type { FC } from "react";
-import ShikiHighlighter, { type ShikiHighlighterProps } from "react-shiki";
-import type { SyntaxHighlighterProps as AUIProps } from "@assistant-ui/react-markdown";
-import { cn } from "@/lib/utils";
+"use client"
+import type { FC } from "react"
+import ShikiHighlighter, { type ShikiHighlighterProps } from "react-shiki"
+import type { SyntaxHighlighterProps as AUIProps } from "@assistant-ui/react-markdown"
+import { cn } from "@/lib/utils"
 
 export type HighlighterProps = Omit<ShikiHighlighterProps, "children" | "theme"> & {
-  theme?: ShikiHighlighterProps["theme"];
+  theme?: ShikiHighlighterProps["theme"]
 } & Pick<AUIProps, "language" | "code"> &
-  Partial<Pick<AUIProps, "node" | "components">>;
+  Partial<Pick<AUIProps, "node" | "components">>
 
 export const SyntaxHighlighter: FC<HighlighterProps> = ({
   code,
@@ -74,9 +79,9 @@ export const SyntaxHighlighter: FC<HighlighterProps> = ({
     >
       {code.trim()}
     </ShikiHighlighter>
-  );
-};
-SyntaxHighlighter.displayName = "SyntaxHighlighter";
+  )
+}
+SyntaxHighlighter.displayName = "SyntaxHighlighter"
 ```
 
 Register it in `defaultComponents` (file `markdown-text.tsx`):
@@ -91,17 +96,16 @@ export const defaultComponents = memoizeMarkdownComponents({
 });
 ```
 
-`ShikiHighlighter` props worth knowing: `theme` (a single theme or a multi-theme object), `language` (default `"text"`), `defaultColor` (`string | false`), `delay` (highlight throttle for streaming, default `0`), `customLanguages`, and `codeToHastOptions`.
+`ShikiHighlighter` props worth knowing: `theme` (a single theme or a multi-theme object), `language` (default `"text"`),
+`defaultColor` (`string | false`), `delay` (highlight throttle for streaming, default `0`), `customLanguages`, and
+`codeToHastOptions`.
 
 ## Dual / multi theme
 
 Pass a `{ light, dark }` object plus `defaultColor="light-dark()"`.
 
 ```tsx
-<ShikiHighlighter
-  theme={{ light: "github-light", dark: "github-dark" }}
-  defaultColor="light-dark()"
->
+<ShikiHighlighter theme={{ light: "github-light", dark: "github-dark" }} defaultColor="light-dark()">
   {code.trim()}
 </ShikiHighlighter>
 ```
@@ -109,14 +113,20 @@ Pass a `{ light, dark }` object plus `defaultColor="light-dark()"`.
 Wire up `color-scheme` in `globals.css`. System based:
 
 ```css
-:root { color-scheme: light dark; }
+:root {
+  color-scheme: light dark;
+}
 ```
 
 Class based:
 
 ```css
-:root { color-scheme: light; }
-:root.dark { color-scheme: dark; }
+:root {
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
+}
 ```
 
 ## Bundle optimization (shiki)
@@ -124,42 +134,41 @@ Class based:
 Use the web bundle (smaller, web-focused languages):
 
 ```tsx
-import ShikiHighlighter, { type ShikiHighlighterProps } from "react-shiki/web";
+import ShikiHighlighter, { type ShikiHighlighterProps } from "react-shiki/web"
 ```
 
 Or build a custom core highlighter with only the themes and languages you need, then pass it via the `highlighter` prop:
 
 ```tsx
-import { createHighlighterCore, createOnigurumaEngine } from "react-shiki/core";
+import { createHighlighterCore, createOnigurumaEngine } from "react-shiki/core"
 
 const customHighlighter = await createHighlighterCore({
   themes: [import("@shikijs/themes/nord")],
-  langs: [
-    import("@shikijs/langs/javascript"),
-    import("@shikijs/langs/typescript"),
-  ],
+  langs: [import("@shikijs/langs/javascript"), import("@shikijs/langs/typescript")],
   engine: createOnigurumaEngine(import("shiki/wasm")),
-});
+})
 
-<SyntaxHighlighter {...props} language={language} theme={theme} highlighter={customHighlighter} />;
+;<SyntaxHighlighter {...props} language={language} theme={theme} highlighter={customHighlighter} />
 ```
 
 ## react-syntax-highlighter (legacy)
 
-Install via the registry (`https://r.assistant-ui.com/syntax-highlighter.json`), which adds `@assistant-ui/react-syntax-highlighter`, `react-syntax-highlighter`, `@types/react-syntax-highlighter`, and `/components/assistant-ui/syntax-highlighter.tsx`. The light build only ships the languages you register.
+Install via the registry (`https://r.assistant-ui.com/syntax-highlighter.json`), which adds
+`@assistant-ui/react-syntax-highlighter`, `react-syntax-highlighter`, `@types/react-syntax-highlighter`, and
+`/components/assistant-ui/syntax-highlighter.tsx`. The light build only ships the languages you register.
 
 ```tsx
-import { PrismAsyncLight } from "react-syntax-highlighter";
-import { makePrismAsyncLightSyntaxHighlighter } from "@assistant-ui/react-syntax-highlighter";
-import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx";
-import python from "react-syntax-highlighter/dist/esm/languages/prism/python";
-import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { PrismAsyncLight } from "react-syntax-highlighter"
+import { makePrismAsyncLightSyntaxHighlighter } from "@assistant-ui/react-syntax-highlighter"
+import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx"
+import python from "react-syntax-highlighter/dist/esm/languages/prism/python"
+import { coldarkDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
-PrismAsyncLight.registerLanguage("js", tsx);
-PrismAsyncLight.registerLanguage("jsx", tsx);
-PrismAsyncLight.registerLanguage("ts", tsx);
-PrismAsyncLight.registerLanguage("tsx", tsx);
-PrismAsyncLight.registerLanguage("python", python);
+PrismAsyncLight.registerLanguage("js", tsx)
+PrismAsyncLight.registerLanguage("jsx", tsx)
+PrismAsyncLight.registerLanguage("ts", tsx)
+PrismAsyncLight.registerLanguage("tsx", tsx)
+PrismAsyncLight.registerLanguage("python", python)
 
 export const SyntaxHighlighter = makePrismAsyncLightSyntaxHighlighter({
   style: coldarkDark,
@@ -169,7 +178,7 @@ export const SyntaxHighlighter = makePrismAsyncLightSyntaxHighlighter({
     background: "black",
     padding: "1.5rem 1rem",
   },
-});
+})
 ```
 
 Register it the same way:
@@ -186,15 +195,18 @@ export const defaultComponents = memoizeMarkdownComponents({
 
 ## Full language bundle
 
-For all languages without registering each one, use the `/full` subpath and `makePrismAsyncSyntaxHighlighter` instead of the light builder.
+For all languages without registering each one, use the `/full` subpath and `makePrismAsyncSyntaxHighlighter` instead of
+the light builder.
 
 ```tsx
-import { makePrismAsyncSyntaxHighlighter } from "@assistant-ui/react-syntax-highlighter/full";
+import { makePrismAsyncSyntaxHighlighter } from "@assistant-ui/react-syntax-highlighter/full"
 ```
 
 ## Per-language overrides (componentsByLanguage)
 
-`componentsByLanguage` maps a language id to its own `SyntaxHighlighter` (and optional `CodeHeader`). It takes precedence over the global `SyntaxHighlighter` in `components` for that language; other languages fall back to the global one. This is how Mermaid and diff renderers are wired.
+`componentsByLanguage` maps a language id to its own `SyntaxHighlighter` (and optional `CodeHeader`). It takes
+precedence over the global `SyntaxHighlighter` in `components` for that language; other languages fall back to the
+global one. This is how Mermaid and diff renderers are wired.
 
 ```tsx
 const MarkdownTextImpl = () => {
@@ -209,10 +221,10 @@ const MarkdownTextImpl = () => {
         },
       }}
     />
-  );
-};
+  )
+}
 
-export const MarkdownText = memo(MarkdownTextImpl);
+export const MarkdownText = memo(MarkdownTextImpl)
 ```
 
 ## SyntaxHighlighterProps
@@ -221,14 +233,16 @@ Every `SyntaxHighlighter` (global or per language) receives this from `@assistan
 
 ```ts
 export type SyntaxHighlighterProps = {
-  node?: Element | undefined;
+  node?: Element | undefined
   components: {
-    Pre: PreComponent;
-    Code: CodeComponent;
-  };
-  language: string;
-  code: string;
-};
+    Pre: PreComponent
+    Code: CodeComponent
+  }
+  language: string
+  code: string
+}
 ```
 
-`language` falls back to `"unknown"` when the fence has no language; `code` is the raw block text. The shiki and prism components destructure `node` and `components` out and forward the rest, since `react-shiki` and `react-syntax-highlighter` render their own `pre`/`code`.
+`language` falls back to `"unknown"` when the fence has no language; `code` is the raw block text. The shiki and prism
+components destructure `node` and `components` out and forward the rest, since `react-shiki` and
+`react-syntax-highlighter` render their own `pre`/`code`.

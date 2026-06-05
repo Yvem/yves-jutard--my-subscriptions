@@ -4,18 +4,18 @@ Message input form for sending messages.
 
 ## Parts
 
-| Part | Description |
-|------|-------------|
-| `.Root` | Form container |
-| `.Input` | Text input/textarea |
-| `.Send` | Submit button |
-| `.Cancel` | Cancel generation |
-| `.AddAttachment` | Attach files button |
-| `.Attachments` | Render attachments |
-| `.AttachmentDropzone` | Drag-drop area |
-| `.Dictate` | Start voice input |
-| `.StopDictation` | Stop voice input |
-| `.If` | Conditional rendering (deprecated; prefer `AuiIf`) |
+| Part                  | Description                                        |
+| --------------------- | -------------------------------------------------- |
+| `.Root`               | Form container                                     |
+| `.Input`              | Text input/textarea                                |
+| `.Send`               | Submit button                                      |
+| `.Cancel`             | Cancel generation                                  |
+| `.AddAttachment`      | Attach files button                                |
+| `.Attachments`        | Render attachments                                 |
+| `.AttachmentDropzone` | Drag-drop area                                     |
+| `.Dictate`            | Start voice input                                  |
+| `.StopDictation`      | Stop voice input                                   |
+| `.If`                 | Conditional rendering (deprecated; prefer `AuiIf`) |
 
 ## Basic Structure
 
@@ -31,10 +31,7 @@ Message input form for sending messages.
 Form element that handles submission.
 
 ```tsx
-<ComposerPrimitive.Root
-  className="flex gap-2 p-4 border-t"
-  onSubmit={() => console.log("Submitted")}
->
+<ComposerPrimitive.Root className="flex gap-2 p-4 border-t" onSubmit={() => console.log("Submitted")}>
   {children}
 </ComposerPrimitive.Root>
 ```
@@ -65,9 +62,7 @@ Auto-resizing textarea for message input.
 Submit button. Disabled when input is empty or generating.
 
 ```tsx
-<ComposerPrimitive.Send
-  className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
->
+<ComposerPrimitive.Send className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:opacity-50">
   Send
 </ComposerPrimitive.Send>
 ```
@@ -78,16 +73,14 @@ Cancel ongoing generation.
 
 ```tsx
 <AuiIf condition={({ thread }) => thread.isRunning}>
-  <ComposerPrimitive.Cancel className="bg-red-500 text-white px-4 py-2 rounded-lg">
-    Stop
-  </ComposerPrimitive.Cancel>
+  <ComposerPrimitive.Cancel className="bg-red-500 text-white px-4 py-2 rounded-lg">Stop</ComposerPrimitive.Cancel>
 </AuiIf>
 ```
 
 ## Conditional rendering with `AuiIf`
 
-Deprecated `ComposerPrimitive.If` supports only `editing` and `dictation` props.
-Prefer `AuiIf` for richer state checks (`thread`, `composer`, etc.).
+Deprecated `ComposerPrimitive.If` supports only `editing` and `dictation` props. Prefer `AuiIf` for richer state checks
+(`thread`, `composer`, etc.).
 
 ```tsx
 // While sending
@@ -118,11 +111,7 @@ Prefer `AuiIf` for richer state checks (`thread`, `composer`, etc.).
 ### Add Attachment Button
 
 ```tsx
-<ComposerPrimitive.AddAttachment
-  className="p-2 rounded hover:bg-gray-100"
->
-  📎 Attach
-</ComposerPrimitive.AddAttachment>
+<ComposerPrimitive.AddAttachment className="p-2 rounded hover:bg-gray-100">📎 Attach</ComposerPrimitive.AddAttachment>
 ```
 
 ### Attachment List
@@ -139,9 +128,7 @@ Prefer `AuiIf` for richer state checks (`thread`, `composer`, etc.).
 ### Drag-Drop Zone
 
 ```tsx
-<ComposerPrimitive.AttachmentDropzone
-  className="border-2 border-dashed rounded-lg p-4 text-center"
->
+<ComposerPrimitive.AttachmentDropzone className="border-2 border-dashed rounded-lg p-4 text-center">
   Drop files here
 </ComposerPrimitive.AttachmentDropzone>
 ```
@@ -219,10 +206,11 @@ function CustomComposer() {
         </AuiIf>
       </div>
     </ComposerPrimitive.Root>
-  );
+  )
 }
 ```
 
 ## Accessing Composer State
 
-Read composer state with `useAuiState((s) => s.composer...)` (e.g. `s.composer.text`, `s.composer.attachments`) and act via `useAui().composer()` (e.g. `.setText("")`). See the `/runtime` skill for the full state API.
+Read composer state with `useAuiState((s) => s.composer...)` (e.g. `s.composer.text`, `s.composer.attachments`) and act
+via `useAui().composer()` (e.g. `.setText("")`). See the `/runtime` skill for the full state API.

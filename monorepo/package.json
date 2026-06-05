@@ -6,7 +6,8 @@
 	"type": "module",
 	"dependencies": {
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"turbo": "catalog:"
 	},
 	"engines": {
 		"node": "24",

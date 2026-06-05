@@ -4,24 +4,24 @@ Encode and decode streaming formats.
 
 ## Available Encoders
 
-| Encoder | Format | Use Case |
-|---------|--------|----------|
-| `DataStreamEncoder` | AI SDK Data Stream | Default (used by `toUIMessageStreamResponse`) |
-| `AssistantTransportEncoder` | Native SSE (`data: {chunk}`) | Custom backends that want all chunk types |
-| `PlainTextEncoder` | Text-only | Very simple demos |
+| Encoder                     | Format                       | Use Case                                      |
+| --------------------------- | ---------------------------- | --------------------------------------------- |
+| `DataStreamEncoder`         | AI SDK Data Stream           | Default (used by `toUIMessageStreamResponse`) |
+| `AssistantTransportEncoder` | Native SSE (`data: {chunk}`) | Custom backends that want all chunk types     |
+| `PlainTextEncoder`          | Text-only                    | Very simple demos                             |
 
 ## DataStreamEncoder
 
 AI SDK compatible format. You normally don't call it directly—wrap an `AssistantStream`:
 
 ```ts
-import { AssistantStream, DataStreamEncoder, DataStreamDecoder } from "assistant-stream";
+import { AssistantStream, DataStreamEncoder, DataStreamDecoder } from "assistant-stream"
 
-const response = AssistantStream.toResponse(stream, new DataStreamEncoder());
+const response = AssistantStream.toResponse(stream, new DataStreamEncoder())
 
-const stream = AssistantStream.fromResponse(response, new DataStreamDecoder());
+const stream = AssistantStream.fromResponse(response, new DataStreamDecoder())
 for await (const chunk of stream) {
-  console.log(chunk);
+  console.log(chunk)
 }
 ```
 
@@ -30,16 +30,13 @@ for await (const chunk of stream) {
 Native assistant-ui format with all features.
 
 ```ts
-import {
-  AssistantTransportEncoder,
-  AssistantTransportDecoder,
-} from "assistant-stream";
+import { AssistantTransportEncoder, AssistantTransportDecoder } from "assistant-stream"
 
-const response = AssistantStream.toResponse(stream, new AssistantTransportEncoder());
+const response = AssistantStream.toResponse(stream, new AssistantTransportEncoder())
 
-const stream = AssistantStream.fromResponse(response, new AssistantTransportDecoder());
+const stream = AssistantStream.fromResponse(response, new AssistantTransportDecoder())
 for await (const chunk of stream) {
-  console.log(chunk);
+  console.log(chunk)
 }
 ```
 
@@ -48,14 +45,14 @@ for await (const chunk of stream) {
 Simple text-only streaming.
 
 ```ts
-import { PlainTextEncoder, PlainTextDecoder } from "assistant-stream";
+import { PlainTextEncoder, PlainTextDecoder } from "assistant-stream"
 
-const encoder = new PlainTextEncoder();
-const stream = encoder.encode("Hello world!");
+const encoder = new PlainTextEncoder()
+const stream = encoder.encode("Hello world!")
 
-const decoder = new PlainTextDecoder();
+const decoder = new PlainTextDecoder()
 for await (const text of decoder.decode(stream)) {
-  console.log(text);
+  console.log(text)
 }
 ```
 
@@ -64,13 +61,13 @@ for await (const text of decoder.decode(stream)) {
 Optimized for UI rendering - accumulates into message state.
 
 ```ts
-import { UIMessageStreamDecoder } from "assistant-stream";
+import { UIMessageStreamDecoder } from "assistant-stream"
 
-const decoder = new UIMessageStreamDecoder();
+const decoder = new UIMessageStreamDecoder()
 
 for await (const update of decoder.decode(stream)) {
   // update contains full message state ready for UI
-  setMessages(update.messages);
+  setMessages(update.messages)
 }
 ```
 
@@ -85,7 +82,9 @@ const stream = AssistantStream.fromResponse(response, new DataStreamDecoder());
 
 ## Server Response Helpers
 
-Build a stream with `createAssistantStreamController` and encode it via `AssistantStream.toResponse(stream, encoder)`, or use `createAssistantStreamResponse` for the Data Stream default. See [./assistant-transport.md](./assistant-transport.md) and [./data-stream.md](./data-stream.md) for full server examples.
+Build a stream with `createAssistantStreamController` and encode it via `AssistantStream.toResponse(stream, encoder)`,
+or use `createAssistantStreamResponse` for the Data Stream default. See
+[./assistant-transport.md](./assistant-transport.md) and [./data-stream.md](./data-stream.md) for full server examples.
 
 ## Debugging
 
@@ -106,6 +105,6 @@ while (reader) {
 ### Validate Format
 
 ```ts
-const contentType = response.headers.get("Content-Type");
-console.log("Content-Type:", contentType);  // Should be text/event-stream
+const contentType = response.headers.get("Content-Type")
+console.log("Content-Type:", contentType) // Should be text/event-stream
 ```
