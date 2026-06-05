@@ -1,6 +1,12 @@
 import type { PositiveInteger, Url‿str, Immutable } from "@monorepo-private/ts--types"
 
-import { HttpClientError, HttpTimeoutError, HttpRequestError, HttpResponseValidationError, classifyResponseError } from "./errors.ts"
+import {
+	HttpClientError,
+	HttpTimeoutError,
+	HttpRequestError,
+	HttpResponseValidationError,
+	classifyResponseError,
+} from "./errors.ts"
 import { _fetch } from "./fetch.ts"
 import type { HttpResponse, RequestOptions, HttpMethod, Schema } from "./types.ts"
 
@@ -25,12 +31,21 @@ export interface HttpClientOptions {
 	headers: Record<string, string>
 }
 
-export function createꓽHttpClient(base_url: Url‿str, optionsⵧbase: Immutable<Partial<HttpClientOptions>> = {}): HttpClient {
+export function createꓽHttpClient(
+	base_url: Url‿str,
+	optionsⵧbase: Immutable<Partial<HttpClientOptions>> = {},
+): HttpClient {
 	const base_url‿Url = new URL(base_url)
 	// new URL(path, base) only merge base path until last '/': this is what we most likely want
-	const base_url__hrefⵧwith_trailing_slash = base_url‿Url.pathname.endsWith("/") ? base_url‿Url.href : `${base_url‿Url.href}/`
+	const base_url__hrefⵧwith_trailing_slash = base_url‿Url.pathname.endsWith("/")
+		? base_url‿Url.href
+		: `${base_url‿Url.href}/`
 
-	async function _execute_request<T>(path: string, method: HttpMethod, optionⵧrequest: Immutable<Partial<MethodOptions<T>>> = {}): Promise<HttpResponse<T>> {
+	async function _execute_request<T>(
+		path: string,
+		method: HttpMethod,
+		optionⵧrequest: Immutable<Partial<MethodOptions<T>>> = {},
+	): Promise<HttpResponse<T>> {
 		const logger = console // TODO SXC
 
 		const url = (() => {
@@ -38,12 +53,15 @@ export function createꓽHttpClient(base_url: Url‿str, optionsⵧbase: Immutab
 			path = path.startsWith("/") ? path.slice(1) : path
 			const target‿Url = new URL(path, base_url__hrefⵧwith_trailing_slash)
 			if (target‿Url.origin !== base_url‿Url.origin) {
-				throw new HttpClientError(`URL origin mismatch: expected ${base_url‿Url.origin}, got ${target‿Url.origin}`, {
-					code: "INVALID_URL",
-					retryable: false,
-					url: target‿Url.toString(),
-					method,
-				})
+				throw new HttpClientError(
+					`URL origin mismatch: expected ${base_url‿Url.origin}, got ${target‿Url.origin}`,
+					{
+						code: "INVALID_URL",
+						retryable: false,
+						url: target‿Url.toString(),
+						method,
+					},
+				)
 			}
 
 			return target‿Url.toString()

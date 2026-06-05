@@ -11,7 +11,8 @@ describe(`LinkedIn API v2`, function () {
 
 	const http_client = createꓽclient({
 		headers: {
-			"X-linkdapi-apikey": "rnd-LC4ZYmjwBC3QwpHrst1jszbp4RfLirg2w7UnVU9hp9dkI-_1hZx2HM7WaLmsUbqYIO1ouNlBxBPZRy3pt6iEpAWe2aGRUA",
+			"X-linkdapi-apikey":
+				"rnd-LC4ZYmjwBC3QwpHrst1jszbp4RfLirg2w7UnVU9hp9dkI-_1hZx2HM7WaLmsUbqYIO1ouNlBxBPZRy3pt6iEpAWe2aGRUA",
 		},
 	})
 
@@ -29,7 +30,10 @@ describe(`LinkedIn API v2`, function () {
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				// correct path but no Auth
-				expect(err).to.have.deep.property("url", "https://linkdapi.com/api/v1/search/people?firstName=Oliver&lastName=Zhang&profileLanguage=en&count=50")
+				expect(err).to.have.deep.property(
+					"url",
+					"https://linkdapi.com/api/v1/search/people?firstName=Oliver&lastName=Zhang&profileLanguage=en&count=50",
+				)
 				expect(err).to.have.deep.property("status", 403)
 			}
 		})
@@ -44,7 +48,10 @@ describe(`LinkedIn API v2`, function () {
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				// correct path but no Auth
-				expect(err).to.have.deep.property("url", "https://linkdapi.com/api/v1/search/people?urn=ACoAAABCMjsBlsnsypQrujQIErVuOdIdbCIH5O0")
+				expect(err).to.have.deep.property(
+					"url",
+					"https://linkdapi.com/api/v1/search/people?urn=ACoAAABCMjsBlsnsypQrujQIErVuOdIdbCIH5O0",
+				)
 				expect(err).to.have.deep.property("status", 403)
 			}
 		})

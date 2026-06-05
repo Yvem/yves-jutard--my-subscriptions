@@ -142,7 +142,10 @@ export interface SelectMultipleInputSpec<T, RichTextType> extends BaseInputSpec<
 	}
 }
 
-export type InputSpec<T, RichTextType> = ValueInputSpec<T, RichTextType> | SelectOneInputSpec<T, RichTextType> | SelectMultipleInputSpec<T, RichTextType>
+export type InputSpec<T, RichTextType> =
+	| ValueInputSpec<T, RichTextType>
+	| SelectOneInputSpec<T, RichTextType>
+	| SelectMultipleInputSpec<T, RichTextType>
 
 /////////////////////////////////////////////////
 // RESOLVED

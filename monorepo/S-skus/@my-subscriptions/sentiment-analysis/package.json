@@ -1,0 +1,10 @@
+{
+	"name": "@my-subscriptions/sentiment-analysis",
+	"version": "0.0.1",
+	"private": true,
+	"exports": {
+		"./*": "./src/*"
+	},
+	"dependencies": {},
+	"devDependencies": {}
+}

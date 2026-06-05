@@ -19,8 +19,8 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@my-subscriptions
 import { Skeleton } from "@my-subscriptions/ui/components/skeleton"
 import { lastAssistantMessageIsCompleteWithToolCalls } from "ai"
 import { useEffect } from "react"
+import useSWR from "swr"
 
-import { MeFetcher } from "./me-fetcher"
 import { DashboardSidebar } from "./sidebar"
 
 type UserReturn = ReturnType<typeof useUser>
@@ -72,7 +72,6 @@ export const DashboardClient = () => {
 						<div className="flex-1 overflow-y-auto">
 							{/*<Thread />*/}
 							<div className="mx-auto w-full max-w-3xl px-4 py-8 md:px-6 md:py-10">
-								<MeFetcher />
 								<div className="mb-8 space-y-1">
 									<h1 className="text-3xl font-semibold tracking-tight">Your digital presence</h1>
 									<p className="text-muted-foreground text-sm">
@@ -122,14 +121,7 @@ function Results() {
 	return (
 		<div className="space-y-8">
 			<HeatGraph data={[]} />
-			<section className="space-y-3">
-				<h2 className="text-lg font-medium">LinkedIn</h2>
-				{!user && <Skeleton className="h-16 w-full" />}
-				{user && !external_accounts.has("linkedin_oidc") && (
-					<ConnectExternalAccountButton strategy="oauth_linkedin_oidc" label="Connect LinkedIn" />
-				)}
-				{external_accounts.has("linkedin_oidc") && <ExternalAccount ea={external_accounts.get("linkedin_oidc")!} />}
-			</section>
+			<LinkedInSection account={external_accounts.get("linkedin_oidc")} userLoaded={Boolean(user)} />
 			<section className="space-y-3">
 				<h2 className="text-lg font-medium">GitHub</h2>
 				{!user && <Skeleton className="h-16 w-full" />}
@@ -139,6 +131,47 @@ function Results() {
 				{external_accounts.has("github") && <ExternalAccount ea={external_accounts.get("github")!} />}
 			</section>
 		</div>
+	)
+}
+
+function LinkedInSection({ account, userLoaded }: { account?: ExternalAccountResource; userLoaded: boolean }) {
+	// A null key keeps SWR idle until LinkedIn is actually connected, so we never
+	// fire the request the route would only reject. SWR then dedupes concurrent
+	// callers / StrictMode double-mounts and caches across re-renders & navigation.
+	const { data, error, isLoading } = useSWR(account ? "/api/me/linkedin" : null, fetchꓽjson<LinkedInData>)
+
+	return (
+		<section className="space-y-3">
+			<h2 className="text-lg font-medium">LinkedIn</h2>
+			{!userLoaded && <Skeleton className="h-16 w-full" />}
+			{userLoaded && !account && (
+				<ConnectExternalAccountButton strategy="oauth_linkedin_oidc" label="Connect LinkedIn" />
+			)}
+			{account && <ExternalAccount ea={account} />}
+			{account && <LinkedInPresence data={data} error={error} isLoading={isLoading} />}
+		</section>
+	)
+}
+
+function LinkedInPresence({ data, error, isLoading }: { data?: LinkedInData; error?: unknown; isLoading: boolean }) {
+	if (isLoading) return <p className="text-muted-foreground text-sm">Loading your LinkedIn activity…</p>
+	if (error) return <p className="text-destructive text-sm">Couldn’t load your LinkedIn activity.</p>
+	if (!data?.posts) return null
+
+	const count = data.posts.length
+	return (
+		<>
+			<p className="text-muted-foreground text-sm">
+				{count} post{count === 1 ? "" : "s"} found.
+			</p>
+			<ol>
+				{data.posts.map((p) => (
+					<small>
+						<pre>{JSON.stringify(p)}</pre>
+					</small>
+				))}
+			</ol>
+		</>
 	)
 }
 
@@ -196,6 +229,17 @@ function ConnectExternalAccountButton({ strategy, label }: { strategy: OAuthStra
 			{label}
 		</Button>
 	)
+}
+
+type LinkedInData = {
+	userⵧlinkedin?: { given_name?: string; family_name?: string; picture?: string }
+	posts?: unknown[]
+}
+
+async function fetchꓽjson<T>(url: string): Promise<T> {
+	const response = await fetch(url)
+	if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
+	return response.json() as Promise<T>
 }
 
 // <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">Not connected</div>

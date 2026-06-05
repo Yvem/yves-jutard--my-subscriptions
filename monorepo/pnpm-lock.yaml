@@ -13,6 +13,9 @@ catalogs:
     oxlint:
       specifier: ^1
       version: 1.67.0
+    swr:
+      specifier: ^2.4.1
+      version: 2.4.1
     turbo:
       specifier: ^2
       version: 2.9.16
@@ -198,6 +201,12 @@ importers:
       '@clerk/themes':
         specifier: ^2.4.57
         version: 2.4.57(react-dom@19.2.6)(react@19.2.6)
+      '@monorepo-private/client--com.linkdapi':
+        specifier: workspace:*
+        version: link:../../../1-isomorphic/client--com.linkdapi
+      '@monorepo-private/client--com.linkedin.api':
+        specifier: workspace:*
+        version: link:../../../1-isomorphic/client--com.linkedin.api
       '@monorepo-private/cn':
         specifier: workspace:*
         version: link:../../../4-engine--browser/cn
@@ -246,6 +255,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      swr:
+        specifier: 'catalog:'
+        version: 2.4.1(react@19.2.6)
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
@@ -283,6 +295,8 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+
+  S-skus/@my-subscriptions/sentiment-analysis: {}
 
   S-skus/@my-subscriptions/ui:
     dependencies:

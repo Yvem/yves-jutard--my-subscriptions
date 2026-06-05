@@ -123,4 +123,17 @@ interface TrackedEngagement<RichTextFormat> extends Engagement<RichTextFormat> {
 
 /////////////////////////////////////////////////
 
-export { type ConversationRole, type SuccessOrFailure, type FlowAlignment, type StoryTellingUnit, type StoryTellingSequence, type StoryTellingConcurrence, type Story, type EngagementSequence, type AttentionLevel, type Engagement, type PendingEngagementUId, type TrackedEngagement }
+export {
+	type ConversationRole,
+	type SuccessOrFailure,
+	type FlowAlignment,
+	type StoryTellingUnit,
+	type StoryTellingSequence,
+	type StoryTellingConcurrence,
+	type Story,
+	type EngagementSequence,
+	type AttentionLevel,
+	type Engagement,
+	type PendingEngagementUId,
+	type TrackedEngagement,
+}

@@ -47,7 +47,12 @@ export class HttpRequestError extends HttpClientError {
 }
 
 export class HttpResponseError extends HttpClientError {
-	constructor(url: string, method: HttpMethod, status: number, options?: { retryable?: boolean; responseBody?: unknown }) {
+	constructor(
+		url: string,
+		method: HttpMethod,
+		status: number,
+		options?: { retryable?: boolean; responseBody?: unknown },
+	) {
 		super(`HTTP Response failed due to status ${status}`, {
 			status,
 			code: `HTTP_${status}`,
@@ -102,7 +107,11 @@ export function isRetryableError(error: unknown): boolean {
 	return false
 }
 
-export async function classifyResponseError(response: Response, url: string, method: HttpMethod): Promise<HttpResponseError> {
+export async function classifyResponseError(
+	response: Response,
+	url: string,
+	method: HttpMethod,
+): Promise<HttpResponseError> {
 	let responseBody: unknown
 	try {
 		responseBody = await response.json()

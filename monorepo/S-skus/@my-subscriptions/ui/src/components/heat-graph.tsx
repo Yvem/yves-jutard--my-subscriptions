@@ -6,7 +6,7 @@ const COLORS = ["#ebedf0", "#c6d7f9", "#8fb0f3", "#5888e8", "#2563eb"]
 
 export function HeatGraph({ data }: { data: HeatGraphPrimitive.DataPoint[] }) {
 	return (
-		<HeatGraphPrimitive.Root data={data} weekStart="monday" colorScale={COLORS} className="flex flex-col gap-2">
+		<HeatGraphPrimitive.Root data={data} weekStart="monday" colorScale={COLORS} className="flex w-fit flex-col gap-2">
 			<MonthLabels />
 			<div className="flex gap-2">
 				<DayLabels />
@@ -40,7 +40,7 @@ function DayLabels() {
 		<div className="flex w-8 shrink-0 flex-col justify-between py-[2px]">
 			<HeatGraphPrimitive.DayLabels>
 				{({ label }) => (
-					<span className="flex h-[13px] items-center text-xs text-gray-500">
+					<span className="flex h-[11px] items-center text-xs text-gray-500">
 						{label.row % 2 === 0 ? HeatGraphPrimitive.DAY_SHORT[label.dayOfWeek] : ""}
 					</span>
 				)}
@@ -51,8 +51,8 @@ function DayLabels() {
 
 function CellGrid() {
 	return (
-		<HeatGraphPrimitive.Grid className="flex-1 gap-[3px]">
-			{() => <HeatGraphPrimitive.Cell className="aspect-square w-full rounded-sm" />}
+		<HeatGraphPrimitive.Grid className="gap-[2px]">
+			{() => <HeatGraphPrimitive.Cell className="size-[10px] rounded-[3px]" />}
 		</HeatGraphPrimitive.Grid>
 	)
 }
@@ -62,7 +62,7 @@ function CellTooltip() {
 		<HeatGraphPrimitive.Tooltip className="pointer-events-none rounded-md bg-gray-900 px-3 py-1.5 text-xs whitespace-nowrap text-white shadow-lg">
 			{({ cell }) => (
 				<>
-					<strong>{cell.count} contributions</strong> on{" "}
+					<strong>{cell.count} activity</strong> on{" "}
 					{cell.date.toLocaleDateString("en-US", {
 						month: "short",
 						day: "numeric",
@@ -79,7 +79,7 @@ function GraphLegend() {
 		<div className="ms-auto flex items-center gap-1 text-xs text-gray-500">
 			<span>Less</span>
 			<HeatGraphPrimitive.Legend>
-				{() => <HeatGraphPrimitive.LegendLevel className="h-[13px] w-[13px] rounded-sm" />}
+				{() => <HeatGraphPrimitive.LegendLevel className="size-[11px] rounded-[3px]" />}
 			</HeatGraphPrimitive.Legend>
 			<span>More</span>
 		</div>

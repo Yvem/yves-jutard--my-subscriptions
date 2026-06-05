@@ -18,7 +18,15 @@ const ActionRenameAvatar = {
 		type: "string",
 
 		//default_value?: T, No possible default in this case
-		normalizers: ["strⳇnormalize_unicode", "strⳇcoerce_toꓽascii", "strⳇcoerce_delimiters_to_space", "strⳇcoerce_blanks_to_single_spaces", "strⳇcaseⵧto_lower", "strⳇcapitalizeⵧwords", "strⳇtrim"],
+		normalizers: [
+			"strⳇnormalize_unicode",
+			"strⳇcoerce_toꓽascii",
+			"strⳇcoerce_delimiters_to_space",
+			"strⳇcoerce_blanks_to_single_spaces",
+			"strⳇcaseⵧto_lower",
+			"strⳇcapitalizeⵧwords",
+			"strⳇtrim",
+		],
 		validators: {
 			strⳇlengthⵧmin: {
 				params: 1,

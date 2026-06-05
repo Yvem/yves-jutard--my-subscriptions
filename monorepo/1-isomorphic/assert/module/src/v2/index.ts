@@ -66,7 +66,12 @@ type Context = {
 	error?: ExtendedError
 }
 interface AssertFn {
-	(assertion: any, assertion_description?: string | (() => string), details?: { statusCode?: number }, _internal?: Context): asserts assertion
+	(
+		assertion: any,
+		assertion_description?: string | (() => string),
+		details?: { statusCode?: number },
+		_internal?: Context,
+	): asserts assertion
 }
 type AssertFnParams = Parameters<AssertFn>
 
@@ -203,8 +208,16 @@ function assert_from(fn_in_obj: { [name: string]: Function }) {
 			}
 
 			return {
-				assert: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧparam(assertion, assertion_description, details, sub_context),
-				require: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧparam(assertion, assertion_description, details, sub_context),
+				assert: (
+					assertion: AssertFnParams[0],
+					assertion_description?: AssertFnParams[1],
+					details?: AssertFnParams[2],
+				) => assertⵧparam(assertion, assertion_description, details, sub_context),
+				require: (
+					assertion: AssertFnParams[0],
+					assertion_description?: AssertFnParams[1],
+					details?: AssertFnParams[2],
+				) => assertⵧparam(assertion, assertion_description, details, sub_context),
 			}
 		},
 		forⵧvalue(value_in_obj: { [name: string]: any }) {
@@ -219,16 +232,33 @@ function assert_from(fn_in_obj: { [name: string]: Function }) {
 			}
 
 			return {
-				assert: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => _assert(assertion, assertion_description, details, sub_context),
-				post: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpost(assertion, assertion_description, details, sub_context),
-				ensure: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpost(assertion, assertion_description, details, sub_context),
+				assert: (
+					assertion: AssertFnParams[0],
+					assertion_description?: AssertFnParams[1],
+					details?: AssertFnParams[2],
+				) => _assert(assertion, assertion_description, details, sub_context),
+				post: (
+					assertion: AssertFnParams[0],
+					assertion_description?: AssertFnParams[1],
+					details?: AssertFnParams[2],
+				) => assertⵧpost(assertion, assertion_description, details, sub_context),
+				ensure: (
+					assertion: AssertFnParams[0],
+					assertion_description?: AssertFnParams[1],
+					details?: AssertFnParams[2],
+				) => assertⵧpost(assertion, assertion_description, details, sub_context),
 			}
 		},
-		assert: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => _assert(assertion, assertion_description, details, context),
-		pre: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpre(assertion, assertion_description, details, context),
-		require: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpre(assertion, assertion_description, details, context),
-		post: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpost(assertion, assertion_description, details, context),
-		ensure: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) => assertⵧpost(assertion, assertion_description, details, context),
+		assert: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) =>
+			_assert(assertion, assertion_description, details, context),
+		pre: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) =>
+			assertⵧpre(assertion, assertion_description, details, context),
+		require: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) =>
+			assertⵧpre(assertion, assertion_description, details, context),
+		post: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) =>
+			assertⵧpost(assertion, assertion_description, details, context),
+		ensure: (assertion: AssertFnParams[0], assertion_description?: AssertFnParams[1], details?: AssertFnParams[2]) =>
+			assertⵧpost(assertion, assertion_description, details, context),
 	}
 }
 
@@ -272,7 +302,12 @@ function _on_failure(context: Context): never {
 		return "should be truthy"
 	})()
 
-	const message__body = [...(caller__name ? [`${caller__name}():`] : []), `${error!.message__prefix}:`, ...(object_under_check__name ? [`${object_under_check__name}`] : []), message__body__assertion]
+	const message__body = [
+		...(caller__name ? [`${caller__name}():`] : []),
+		`${error!.message__prefix}:`,
+		...(object_under_check__name ? [`${object_under_check__name}`] : []),
+		message__body__assertion,
+	]
 
 	let messageⵧfinal = message__body.join(" ")
 	if (!messageⵧfinal.endsWith("!")) messageⵧfinal += "!"
