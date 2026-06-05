@@ -5,7 +5,8 @@
 	"license": "UNLICENSED",
 	"type": "module",
 	"dependencies": {
-		"oxfmt": "catalog:"
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
 	},
 	"engines": {
 		"node": "24",

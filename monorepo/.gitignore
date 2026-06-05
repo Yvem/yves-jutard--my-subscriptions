@@ -22,3 +22,13 @@ logs/
 node_modules/
 tmp-*/
 tmp/
+/coverage
+.next/
+out/
+build/
+.pnpm-debug.log*
+.env*
+!.env.example
+.vercel
+next-env.d.ts
+.clerk/
