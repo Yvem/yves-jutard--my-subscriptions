@@ -1,0 +1,16 @@
+{
+	"name": "@monorepo/monorepo",
+	"version": "0.0.0",
+	"private": true,
+	"license": "UNLICENSED",
+	"type": "module",
+	"dependencies": {
+		"oxfmt": "catalog:"
+	},
+	"engines": {
+		"node": "24",
+		"pnpm": ">=11"
+	},
+	"packageManager": "pnpm@11.4.0+sha512.f0febc7e37552ab485494a914241b338e0b3580b93d54ce31f00933015880863129038a1b4ae4e414a0ee63ac35bf21197e990172c4a68256450b5636310968f",
+	"// @infinite-monorepo/plugin--npm": "auto generated some content in this file"
+}
