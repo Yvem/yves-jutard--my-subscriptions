@@ -1,13 +1,12 @@
-"use client"
-
-import { useAuth, useUser } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation"
+import { DashboardClient } from "./dashboard-client"
 
 export const dynamic = "force-dynamic"
 
-export default function ChatPage() {
-	const { getToken } = useAuth()
-	const { user } = useUser()
-	getToken({ template: "my-subscriptions" })
+export default async function DashboardPage() {
+	const { userId } = await auth()
+	if (!userId) redirect("/sign-in")
 
-	return <main className="h-dvh">TODO Dashboard</main>
+	return <DashboardClient />
 }

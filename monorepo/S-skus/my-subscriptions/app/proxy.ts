@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/api(.*)"]);
+const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/dashboard(.*)", "/api(.*)"]);
 
 /**
  * Middleware that keeps the landing page (/) public but protects /chat and /api.
