@@ -1,6 +1,6 @@
-import { TooltipProvider } from "@/components/ui/tooltip"
 import { ClerkProvider } from "@clerk/nextjs"
 import { dark } from "@clerk/themes"
+import { TooltipProvider } from "@my-subscriptions/ui/components/tooltip"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import type { ReactNode } from "react"

@@ -1,10 +1,11 @@
 "use client"
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { cn } from "@/lib/utils"
 import { useScrollLock, type ToolCallMessagePartStatus, type ToolCallMessagePartComponent } from "@assistant-ui/react"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@my-subscriptions/ui/components/collapsible"
 import { AlertCircleIcon, CheckIcon, ChevronDownIcon, LoaderIcon, XCircleIcon } from "lucide-react"
 import { memo, useCallback, useRef, useState } from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 const ANIMATION_DURATION = 200
 

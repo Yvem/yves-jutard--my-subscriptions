@@ -22,7 +22,6 @@ either globally via `defaultComponents` or per language via `componentsByLanguag
 
 ```tsx
 import { MarkdownTextPrimitive } from "@assistant-ui/react-markdown"
-
 ;<MarkdownTextPrimitive
   remarkPlugins={[remarkGfm]}
   className="aui-md"
@@ -46,7 +45,7 @@ Install via the registry (`https://r.assistant-ui.com/shiki-highlighter.json`), 
 import type { FC } from "react"
 import ShikiHighlighter, { type ShikiHighlighterProps } from "react-shiki"
 import type { SyntaxHighlighterProps as AUIProps } from "@assistant-ui/react-markdown"
-import { cn } from "@/lib/utils"
+import { cn } from "@monorepo-private/cn"
 
 export type HighlighterProps = Omit<ShikiHighlighterProps, "children" | "theme"> & {
   theme?: ShikiHighlighterProps["theme"]

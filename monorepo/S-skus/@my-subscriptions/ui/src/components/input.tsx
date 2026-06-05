@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils"
 import * as React from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
 	return (

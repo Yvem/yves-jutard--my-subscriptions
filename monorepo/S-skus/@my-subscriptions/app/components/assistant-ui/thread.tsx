@@ -14,8 +14,6 @@ import {
 import { ToolFallback } from "@/components/assistant-ui/tool-fallback"
 import { ToolGroupContent, ToolGroupRoot, ToolGroupTrigger } from "@/components/assistant-ui/tool-group"
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import {
 	ActionBarMorePrimitive,
 	ActionBarPrimitive,
@@ -29,6 +27,7 @@ import {
 	ThreadPrimitive,
 	useAuiState,
 } from "@assistant-ui/react"
+import { Button } from "@my-subscriptions/ui/components/button"
 import {
 	ArrowDownIcon,
 	ArrowUpIcon,
@@ -43,6 +42,8 @@ import {
 	SquareIcon,
 } from "lucide-react"
 import type { FC } from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 export const Thread: FC = () => {
 	return (

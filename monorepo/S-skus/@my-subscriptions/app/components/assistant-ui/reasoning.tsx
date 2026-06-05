@@ -1,17 +1,18 @@
 "use client"
 
 import { MarkdownText } from "@/components/assistant-ui/markdown-text"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { cn } from "@/lib/utils"
 import {
 	useScrollLock,
 	useAuiState,
 	type ReasoningMessagePartComponent,
 	type ReasoningGroupComponent,
 } from "@assistant-ui/react"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@my-subscriptions/ui/components/collapsible"
 import { cva, type VariantProps } from "class-variance-authority"
 import { BrainIcon, ChevronDownIcon } from "lucide-react"
 import { memo, useCallback, useRef, useState } from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 const ANIMATION_DURATION = 200
 

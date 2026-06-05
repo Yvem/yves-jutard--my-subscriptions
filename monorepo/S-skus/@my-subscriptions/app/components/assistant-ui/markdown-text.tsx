@@ -2,7 +2,6 @@
 
 import "@assistant-ui/react-markdown/styles/dot.css"
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button"
-import { cn } from "@/lib/utils"
 import {
 	type CodeHeaderProps,
 	MarkdownTextPrimitive,
@@ -12,6 +11,8 @@ import {
 import { CheckIcon, CopyIcon } from "lucide-react"
 import { type FC, memo, useState } from "react"
 import remarkGfm from "remark-gfm"
+
+import { cn } from "@monorepo-private/cn"
 
 const MarkdownTextImpl = () => {
 	return <MarkdownTextPrimitive remarkPlugins={[remarkGfm]} className="aui-md" components={defaultComponents} />

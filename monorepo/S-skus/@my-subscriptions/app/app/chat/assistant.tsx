@@ -2,6 +2,9 @@
 
 import { Thread } from "@/components/assistant-ui/thread"
 import { ThreadListSidebar } from "@/components/assistant-ui/threadlist-sidebar"
+import { AssistantRuntimeProvider, AssistantCloud } from "@assistant-ui/react"
+import { useChatRuntime, AssistantChatTransport } from "@assistant-ui/react-ai-sdk"
+import { useAuth, UserButton, useUser } from "@clerk/nextjs"
 import {
 	Breadcrumb,
 	BreadcrumbList,
@@ -9,12 +12,9 @@ import {
 	BreadcrumbLink,
 	BreadcrumbSeparator,
 	BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AssistantRuntimeProvider, AssistantCloud } from "@assistant-ui/react"
-import { useChatRuntime, AssistantChatTransport } from "@assistant-ui/react-ai-sdk"
-import { useAuth, UserButton, useUser } from "@clerk/nextjs"
+} from "@my-subscriptions/ui/components/breadcrumb"
+import { Separator } from "@my-subscriptions/ui/components/separator"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@my-subscriptions/ui/components/sidebar"
 import { lastAssistantMessageIsCompleteWithToolCalls } from "ai"
 import { useMemo } from "react"
 
@@ -22,23 +22,7 @@ export const Assistant = () => {
 	const { getToken } = useAuth()
 	const { user } = useUser()
 
-	const cloud = useMemo(
-		() =>
-			new AssistantCloud({
-				baseUrl: process.env.NEXT_PUBLIC_ASSISTANT_BASE_URL!,
-				authToken: async () => {
-					const token = await getToken({ template: "my-subscriptions" })
-
-					if (!token) throw new Error("Missing Clerk JWT")
-
-					return token
-				},
-			}),
-		[getToken],
-	)
-
 	const runtime = useChatRuntime({
-		cloud,
 		sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithToolCalls,
 		transport: new AssistantChatTransport({
 			api: "/api/chat",
@@ -57,17 +41,11 @@ export const Assistant = () => {
 							<Breadcrumb>
 								<BreadcrumbList>
 									<BreadcrumbItem className="hidden md:block">
-										<BreadcrumbLink
-											href="https://www.assistant-ui.com/docs/getting-started"
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											Build Your Own ChatGPT UX
-										</BreadcrumbLink>
+										<BreadcrumbLink href="/">My Subscriptions</BreadcrumbLink>
 									</BreadcrumbItem>
 									<BreadcrumbSeparator className="hidden md:block" />
 									<BreadcrumbItem>
-										<BreadcrumbPage>Starter Template</BreadcrumbPage>
+										<BreadcrumbPage>Chat</BreadcrumbPage>
 									</BreadcrumbItem>
 								</BreadcrumbList>
 							</Breadcrumb>

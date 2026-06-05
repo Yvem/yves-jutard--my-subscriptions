@@ -1,14 +1,15 @@
 "use client"
 
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Dialog, DialogTitle, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
 import { AttachmentPrimitive, ComposerPrimitive, MessagePrimitive, useAuiState, useAui } from "@assistant-ui/react"
+import { Avatar, AvatarImage, AvatarFallback } from "@my-subscriptions/ui/components/avatar"
+import { Dialog, DialogTitle, DialogContent, DialogTrigger } from "@my-subscriptions/ui/components/dialog"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@my-subscriptions/ui/components/tooltip"
 import { XIcon, PlusIcon, FileText } from "lucide-react"
 import { type PropsWithChildren, useEffect, useState, type FC } from "react"
 import { useShallow } from "zustand/shallow"
+
+import { cn } from "@monorepo-private/cn"
 
 const useFileSrc = (file: File | undefined) => {
 	const [src, setSrc] = useState<string | undefined>(undefined)

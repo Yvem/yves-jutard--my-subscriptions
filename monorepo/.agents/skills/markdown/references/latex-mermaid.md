@@ -101,7 +101,7 @@ import { useAuiState } from "@assistant-ui/react"
 import type { SyntaxHighlighterProps } from "@assistant-ui/react-markdown"
 import mermaid from "mermaid"
 import { type FC, useEffect, useRef } from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@monorepo-private/cn"
 
 export type MermaidDiagramProps = SyntaxHighlighterProps & {
   className?: string
@@ -159,7 +159,6 @@ default highlighter.
 
 ```tsx
 import { MermaidDiagram } from "@/components/assistant-ui/mermaid-diagram"
-
 ;<MarkdownTextPrimitive
   remarkPlugins={[remarkGfm]}
   className="aui-md"

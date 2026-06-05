@@ -1,4 +1,3 @@
-import { ThreadList } from "@/components/assistant-ui/thread-list"
 import { GitHubIcon } from "@/components/icons/github"
 import {
 	Sidebar,
@@ -13,7 +12,7 @@ import {
 import { CalendarSync } from "lucide-react"
 import type * as React from "react"
 
-export function ThreadListSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar {...props}>
 			<SidebarHeader className="aui-sidebar-header mb-2 border-b">
@@ -34,9 +33,7 @@ export function ThreadListSidebar({ ...props }: React.ComponentProps<typeof Side
 					</SidebarMenu>
 				</div>
 			</SidebarHeader>
-			<SidebarContent className="aui-sidebar-content px-2">
-				<ThreadList />
-			</SidebarContent>
+			<SidebarContent className="aui-sidebar-content px-2">ThreadList</SidebarContent>
 			<SidebarRail />
 			<SidebarFooter className="aui-sidebar-footer border-t">
 				<SidebarMenu>

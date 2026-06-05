@@ -1,4 +1,4 @@
-import { Assistant } from "../assistant"
+import { Assistant } from "./assistant"
 
 export const dynamic = "force-dynamic"
 

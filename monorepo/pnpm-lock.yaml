@@ -31,6 +31,15 @@ importers:
         specifier: 'catalog:'
         version: 2.9.16
 
+  4-engine--browser/cn:
+    dependencies:
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      tailwind-merge:
+        specifier: ^3.6.0
+        version: 3.6.0
+
   S-skus/@my-subscriptions/app:
     dependencies:
       '@ai-sdk/openai':
@@ -51,6 +60,12 @@ importers:
       '@clerk/themes':
         specifier: ^2.4.57
         version: 2.4.57(react-dom@19.2.6)(react@19.2.6)
+      '@monorepo-private/cn':
+        specifier: workspace:*
+        version: link:../../../4-engine--browser/cn
+      '@my-subscriptions/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@radix-ui/react-avatar':
         specifier: ^1.1.11
         version: 1.1.11(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
@@ -75,9 +90,6 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.6)
@@ -96,9 +108,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      tailwind-merge:
-        specifier: ^3.6.0
-        version: 3.6.0
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
@@ -128,7 +137,7 @@ importers:
         specifier: 'catalog:'
         version: 0.52.0
       oxlint:
-        specifier: ^1.67.0
+        specifier: 'catalog:'
         version: 1.67.0
       tailwindcss:
         specifier: ^4.3.0
@@ -136,6 +145,67 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+
+  S-skus/@my-subscriptions/ui:
+    dependencies:
+      '@assistant-ui/react':
+        specifier: ^0.14.14
+        version: 0.14.14(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)(use-sync-external-store@1.6.0)
+      '@assistant-ui/react-ai-sdk':
+        specifier: latest
+        version: 1.3.30(@assistant-ui/tap@0.5.14)(@types/react@19.2.15)(react@19.2.6)(zod@4.4.3)(zustand@5.0.14)
+      '@assistant-ui/react-markdown':
+        specifier: ^0.14.1
+        version: 0.14.1(@assistant-ui/react@0.14.14)(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      '@monorepo-private/cn':
+        specifier: workspace:*
+        version: link:../../../4-engine--browser/cn
+      '@radix-ui/react-avatar':
+        specifier: ^1.1.11
+        version: 1.1.11(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      '@radix-ui/react-collapsible':
+        specifier: ^1.1.12
+        version: 1.1.12(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.15
+        version: 1.1.15(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      '@radix-ui/react-separator':
+        specifier: ^1.1.8
+        version: 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      '@radix-ui/react-slot':
+        specifier: ^1.2.4
+        version: 1.2.4(@types/react@19.2.15)(react@19.2.6)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.2.8
+        version: 1.2.8(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      lucide-react:
+        specifier: ^1.17.0
+        version: 1.17.0(react@19.2.6)
+      radix-ui:
+        specifier: ^1.4.3
+        version: 1.4.3(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      react:
+        specifier: ^19.2.6
+        version: 19.2.6
+      remark-gfm:
+        specifier: ^4.0.1
+        version: 4.0.1
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
+      tw-shimmer:
+        specifier: ^0.4.11
+        version: 0.4.11(tailwindcss@4.3.0)
+      zustand:
+        specifier: ^5.0.14
+        version: 5.0.14(@types/react@19.2.15)(react@19.2.6)(use-sync-external-store@1.6.0)
+    devDependencies:
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
 
 packages:
 

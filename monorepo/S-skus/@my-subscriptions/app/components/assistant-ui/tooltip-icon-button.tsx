@@ -1,10 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
+import { Button } from "@my-subscriptions/ui/components/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@my-subscriptions/ui/components/tooltip"
 import { Slot } from "radix-ui"
 import { type ComponentPropsWithRef, forwardRef } from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 export type TooltipIconButtonProps = ComponentPropsWithRef<typeof Button> & {
 	tooltip: string

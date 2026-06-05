@@ -1,11 +1,12 @@
 "use client"
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { cn } from "@/lib/utils"
 import { useScrollLock } from "@assistant-ui/react"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@my-subscriptions/ui/components/collapsible"
 import { cva, type VariantProps } from "class-variance-authority"
 import { ChevronDownIcon, LoaderIcon } from "lucide-react"
 import { memo, useCallback, useRef, useState, type FC, type PropsWithChildren } from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 const ANIMATION_DURATION = 200
 

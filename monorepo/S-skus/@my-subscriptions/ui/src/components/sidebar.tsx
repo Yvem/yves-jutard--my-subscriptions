@@ -1,17 +1,18 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { cn } from "@/lib/utils"
+import { Button } from "@my-subscriptions/ui/components/button"
+import { Input } from "@my-subscriptions/ui/components/input"
+import { Separator } from "@my-subscriptions/ui/components/separator"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@my-subscriptions/ui/components/sheet"
+import { Skeleton } from "@my-subscriptions/ui/components/skeleton"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@my-subscriptions/ui/components/tooltip"
+import { useIsMobile } from "@my-subscriptions/ui/hooks/use-mobile"
 import { cva, type VariantProps } from "class-variance-authority"
 import { PanelLeftIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import * as React from "react"
+
+import { cn } from "@monorepo-private/cn"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

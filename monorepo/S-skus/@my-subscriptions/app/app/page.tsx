@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs"
+import { Button } from "@my-subscriptions/ui/components/button"
 import { CalendarSync } from "lucide-react"
 import Link from "next/link"
 

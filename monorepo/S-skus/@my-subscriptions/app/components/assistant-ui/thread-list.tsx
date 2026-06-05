@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 import { AuiIf, ThreadListItemMorePrimitive, ThreadListItemPrimitive, ThreadListPrimitive } from "@assistant-ui/react"
+import { Button } from "@my-subscriptions/ui/components/button"
+import { Skeleton } from "@my-subscriptions/ui/components/skeleton"
 import { ArchiveIcon, MoreHorizontalIcon, PlusIcon, TrashIcon } from "lucide-react"
 import type { FC } from "react"
 
