@@ -1,4 +1,5 @@
 import { GitHubIcon } from "@/components/icons/github"
+import { UserAvatar } from "@clerk/nextjs"
 import {
 	Sidebar,
 	SidebarContent,
@@ -33,7 +34,10 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 					</SidebarMenu>
 				</div>
 			</SidebarHeader>
-			<SidebarContent className="aui-sidebar-content px-2">ThreadList</SidebarContent>
+			<SidebarContent className="aui-sidebar-content px-2">
+				<UserAvatar />
+				TODO sth
+			</SidebarContent>
 			<SidebarRail />
 			<SidebarFooter className="aui-sidebar-footer border-t">
 				<SidebarMenu>
