@@ -216,7 +216,6 @@ The `sources` registry component (`https://r.assistant-ui.com/sources.json`) ren
 
 ```tsx
 import { Sources } from "@/components/assistant-ui/sources"
-
 ;<MessagePrimitive.Parts>
   {({ part }) => {
     if (part.type === "source") return <Sources {...part} />

@@ -39,7 +39,6 @@ Dark mode is class-based: toggling the `dark` class on `<html>` switches shadcn 
 ```tsx
 // app/layout.tsx
 import { ThemeProvider } from "next-themes"
-
 ;<ThemeProvider attribute="class" defaultTheme="system">
   {children}
 </ThemeProvider>

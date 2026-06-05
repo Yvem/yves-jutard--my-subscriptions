@@ -181,6 +181,9 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      heat-graph:
+        specifier: ^0.0.10
+        version: 0.0.10(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.6)
@@ -1954,6 +1957,16 @@ packages:
 
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
+
+  heat-graph@0.0.10:
+    resolution: {integrity: sha512-P7Vav+rT0vzFYcqY2w1RHq/0cEmd2ky6fq4J8bbWbxKmPtp+QxOSbEOwFVdKXvCO7pOS4CI0/sWSBCjWBoJOIQ==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   html-url-attributes@3.0.1:
     resolution: {integrity: sha512-ol6UPyBWqsrO6EJySPz2O7ZSr856WDrEzM5zMqp+FJJLGMW35cLYmmZnl0vztAZxRUoNZJFTCohfjuIJ8I4QBQ==}
@@ -4161,6 +4174,16 @@ snapshots:
   hast-util-whitespace@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
+
+  heat-graph@0.0.10(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6):
+    dependencies:
+      '@radix-ui/react-popper': 1.2.8(@types/react-dom@19.2.3)(@types/react@19.2.15)(react-dom@19.2.6)(react@19.2.6)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
+    optionalDependencies:
+      '@types/react': 19.2.15
+    transitivePeerDependencies:
+      - '@types/react-dom'
 
   html-url-attributes@3.0.1: {}
 

@@ -34,7 +34,6 @@ The generated component composes these primitives from `@assistant-ui/react`:
 
 ```tsx
 import { AssistantModalPrimitive } from "@assistant-ui/react"
-
 ;<AssistantModalPrimitive.Root>
   <AssistantModalPrimitive.Anchor>
     <AssistantModalPrimitive.Trigger asChild>{/* the floating bot button */}</AssistantModalPrimitive.Trigger>
@@ -76,7 +75,6 @@ component (`components/ui/resizable`), which `add` installs automatically. Edit 
 ```tsx
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { Thread } from "@/components/assistant-ui/thread"
-
 ;<ResizablePanelGroup direction="horizontal">
   <ResizablePanel defaultSize={60} minSize={30}>
     {children}
@@ -167,7 +165,6 @@ For custom layout, drop the all-in-one `ModelSelector` and compose `ModelSelecto
 
 ```tsx
 import { ModelSelectorRoot, ModelSelectorTrigger, ModelSelectorContent } from "@/components/assistant-ui/model-selector"
-
 ;<ModelSelectorRoot models={models} value={modelId} onValueChange={setModelId}>
   <ModelSelectorTrigger variant="ghost" />
   <ModelSelectorContent />
@@ -190,7 +187,6 @@ Wire them into your `thread.tsx`. In the composer:
 
 ```tsx
 import { ComposerAttachments, ComposerAddAttachment } from "@/components/assistant-ui/attachment"
-
 ;<ComposerPrimitive.Root>
   <ComposerAttachments />
   <ComposerAddAttachment />
@@ -202,7 +198,6 @@ In a user message, render the sent attachments above the text:
 
 ```tsx
 import { UserMessageAttachments } from "@/components/assistant-ui/attachment"
-
 ;<MessagePrimitive.Root>
   <UserMessageAttachments />
   <MessagePrimitive.Parts />

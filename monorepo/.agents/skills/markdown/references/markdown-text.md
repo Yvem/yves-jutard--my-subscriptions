@@ -117,6 +117,5 @@ const CodeHeader: FC<CodeHeaderProps> = ({ language, code }) => {
 
 ```tsx
 import { MarkdownText } from "@/components/assistant-ui/markdown-text"
-
 ;<MessagePrimitive.Parts>{({ part }) => (part.type === "text" ? <MarkdownText /> : null)}</MessagePrimitive.Parts>
 ```

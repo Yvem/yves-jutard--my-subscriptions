@@ -62,7 +62,6 @@ of your own layout. It accepts standard iframe props such as `style`.
 
 ```tsx
 import { DevToolsFrame } from "@assistant-ui/react-devtools"
-
 ;<div className="h-96 w-full">
   <DevToolsFrame style={{ width: "100%", height: "100%", border: "none" }} />
 </div>

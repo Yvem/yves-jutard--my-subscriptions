@@ -46,7 +46,6 @@ const MarkdownTextImpl = () => (
 )
 
 export const MarkdownText = memo(MarkdownTextImpl)
-
 ;<MessagePrimitive.Parts>{({ part }) => (part.type === "text" ? <MarkdownText /> : null)}</MessagePrimitive.Parts>
 ```
 
