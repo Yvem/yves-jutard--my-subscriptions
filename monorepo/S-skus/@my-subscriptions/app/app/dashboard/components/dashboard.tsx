@@ -123,7 +123,9 @@ function Results() {
 					<ConnectExternalAccountButton strategy="oauth_github" label="Connect GitHub" />
 				)}
 				{external_accounts.has("github") && <ExternalAccount ea={external_accounts.get("github")!} />}
-				{external_accounts.has("github") && <p>GitHub content is not implemented. Please try LinkedIn instead.</p>}
+				{external_accounts.has("github") && (
+					<p>GitHub content analysis is not implemented. Please try LinkedIn instead.</p>
+				)}
 			</section>
 		</div>
 	)

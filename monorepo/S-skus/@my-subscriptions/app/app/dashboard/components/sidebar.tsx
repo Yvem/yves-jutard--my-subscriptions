@@ -12,6 +12,25 @@ import {
 import { CalendarSync } from "lucide-react"
 import type * as React from "react"
 
+const howItWorksSteps = [
+	{
+		title: "Connect your accounts",
+		description: "Link LinkedIn or GitHub in one click. We only read what's public.",
+	},
+	{
+		title: "See your activity",
+		description: "Your activity is charted on a heat graph so you can glance your history.",
+	},
+	{
+		title: "Review the analysis",
+		description: "Each post is scored for sentiment, surfacing the overall tone of your digital footprint.",
+	},
+	{
+		title: "Ask the assistant",
+		description: "Chat with the built-in assistant to further reflect on your activity. (TO BE IMPLEMENTED)",
+	},
+] as const
+
 export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar {...props}>
@@ -33,10 +52,22 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 					</SidebarMenu>
 				</div>
 			</SidebarHeader>
-			<SidebarContent className="aui-sidebar-content px-2">
-				<ol>
-					<li>Connect your social accounts</li>
-					<li>review the analysis</li>
+			<SidebarContent className="aui-sidebar-content px-4 py-2">
+				<p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+					MySubscriptions analyze your public footprint across the social accounts you connect (read-only).
+				</p>
+				<ol className="space-y-4">
+					{howItWorksSteps.map(({ title, description }, index) => (
+						<li key={title} className="flex gap-3">
+							<span className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
+								{index + 1}
+							</span>
+							<div className="flex flex-col gap-0.5">
+								<span className="text-sm font-medium">{title}</span>
+								<span className="text-muted-foreground text-xs leading-relaxed">{description}</span>
+							</div>
+						</li>
+					))}
 				</ol>
 			</SidebarContent>
 			<SidebarRail />
