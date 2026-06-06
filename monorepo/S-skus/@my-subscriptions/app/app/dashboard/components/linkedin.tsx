@@ -2,9 +2,10 @@
 
 import { Skeleton } from "@my-subscriptions/ui/components/skeleton"
 import type { DataPoint } from "heat-graph"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { ConnectExternalAccountButton, ExternalAccount, type ExternalAccountResource } from "./external-account"
+import { analyzers, type AnalyzerName, type Sentiment, type SentimentLabel } from "./sentiment"
 
 export type LinkedInPost = {
 	url: string
@@ -79,6 +80,7 @@ function LinkedInPresence({ data, error, isLoading }: { data?: LinkedInData; err
 
 function PostCard({ post }: { post: LinkedInPost }) {
 	const [expanded, setExpanded] = useState(false)
+	const results = useSentiments(post.content)
 
 	return (
 		<div className="flex items-stretch gap-3">
@@ -99,18 +101,13 @@ function PostCard({ post }: { post: LinkedInPost }) {
 
 				<div className="text-muted-foreground flex items-center gap-3 text-xs">
 					<span>{summarizeEngagements(post.engagements)}</span>
-					<a
-						href={post.url}
-						target="_blank"
-						rel="noreferrer noopener"
-						className="hover:text-foreground underline"
-					>
+					<a href={post.url} target="_blank" rel="noreferrer noopener" className="hover:text-foreground underline">
 						View on LinkedIn
 					</a>
 				</div>
 			</div>
 
-			<PostSentiment />
+			<PostSentiment results={results} />
 		</div>
 	)
 }
@@ -123,15 +120,75 @@ function PostTypeBadge({ type }: { type: LinkedInPost["type"] }) {
 	)
 }
 
-// TODO: wire sentiment analysis. This is a placeholder panel; pass the analysis
-// result in as a prop and render it here once available.
-function PostSentiment() {
+type SentimentResult = Sentiment | { error: string } // missing key = still running
+
+// Runs every analyzer in parallel; each result lands independently, so the fast
+// one (VADER, local) shows without waiting on the slow one (LLM, server).
+function useSentiments(text: string): Map<AnalyzerName, SentimentResult> {
+	const [results, setResults] = useState<Map<AnalyzerName, SentimentResult>>(new Map())
+
+	useEffect(() => {
+		let active = true
+		const settle = (name: AnalyzerName, result: SentimentResult) => {
+			if (active) setResults((prev) => new Map(prev).set(name, result))
+		}
+
+		setResults(new Map())
+		for (const { name, analyze } of analyzers) {
+			void analyze(text)
+				.then((sentiment) => settle(name, sentiment))
+				.catch((error: unknown) => {
+					console.error(`sentiment analyzer "${name}" failed`, error)
+					settle(name, { error: error instanceof Error ? error.message : String(error) })
+				})
+		}
+
+		return () => {
+			active = false
+		}
+	}, [text])
+
+	return results
+}
+
+function PostSentiment({ results }: { results: Map<AnalyzerName, SentimentResult> }) {
 	return (
-		<aside className="bg-muted/40 text-muted-foreground flex w-40 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed p-3 text-center text-xs">
-			<span className="font-medium">Sentiment</span>
-			<span className="opacity-70">Pending analysis</span>
+		<aside className="bg-muted/40 flex w-40 shrink-0 flex-col gap-2 rounded-lg border p-3 text-xs">
+			<span className="text-muted-foreground font-medium">Sentiment</span>
+			<ul className="flex flex-col gap-1.5">
+				{analyzers.map(({ name }) => (
+					<SentimentRow key={name} name={name} result={results.get(name)} />
+				))}
+			</ul>
 		</aside>
 	)
+}
+
+function SentimentRow({ name, result }: { name: AnalyzerName; result?: SentimentResult }) {
+	return (
+		<li className="flex items-center justify-between gap-2">
+			<span className="text-muted-foreground text-[10px] uppercase tracking-wide">{name}</span>
+			{result === undefined ? (
+				<span className="text-muted-foreground opacity-70">…</span>
+			) : "error" in result ? (
+				<span className="text-destructive font-medium" title={result.error}>
+					failed
+				</span>
+			) : (
+				<span className={`font-medium ${sentimentColor[result.label]}`}>
+					{sentimentEmoji[result.label]} {result.score.toFixed(2)}
+				</span>
+			)}
+		</li>
+	)
+}
+
+const sentimentEmoji: Record<SentimentLabel, string> = { positive: "🙂", neutral: "😐", negative: "🙁" }
+
+const sentimentColor: Record<SentimentLabel, string> = {
+	positive: "text-emerald-600 dark:text-emerald-400",
+	neutral: "text-muted-foreground",
+	negative: "text-destructive",
 }
 
 function summarizeEngagements(engagements: LinkedInPost["engagements"]): string {
