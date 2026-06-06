@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 
-export function MeFetcher() {
+export function Debug() {
 	useEffect(() => {
 		fetch("/api/me/linkedin").catch((error) => console.error("Failed to call /api/me", error))
 	}, [])

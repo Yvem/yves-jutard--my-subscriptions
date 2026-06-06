@@ -11,8 +11,7 @@ describe(`LinkedIn API v2`, function () {
 
 	const http_client = createꓽclient({
 		headers: {
-			"X-linkdapi-apikey":
-				"rnd-LC4ZYmjwBC3QwpHrst1jszbp4RfLirg2w7UnVU9hp9dkI-_1hZx2HM7WaLmsUbqYIO1ouNlBxBPZRy3pt6iEpAWe2aGRUA",
+			"X-linkdapi-apikey": "xyz",
 		},
 	})
 
@@ -26,7 +25,6 @@ describe(`LinkedIn API v2`, function () {
 					profileLanguage: "en",
 					count: 50,
 				})
-				console.log(result)
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				// correct path but no Auth
@@ -44,7 +42,6 @@ describe(`LinkedIn API v2`, function () {
 				const result = await GETꓽⳇpostsⳇall(http_client, {
 					urn: "ACoAAABCMjsBlsnsypQrujQIErVuOdIdbCIH5O0",
 				})
-				console.log(result)
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				// correct path but no Auth
@@ -64,7 +61,6 @@ describe(`LinkedIn API v2`, function () {
 					firstName: "Yves",
 					lastName: "Jutard",
 				})
-				console.log(result)
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				expect(err).to.have.deep.property("status", 403)

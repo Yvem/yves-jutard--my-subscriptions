@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 
-import { DashboardClient } from "./dashboard-client"
+import { DashboardClient } from "./components/dashboard"
 
 export const dynamic = "force-dynamic"
 

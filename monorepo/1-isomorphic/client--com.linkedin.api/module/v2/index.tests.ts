@@ -17,7 +17,6 @@ describe(`LinkedIn API v2`, function () {
 		it("should work", async () => {
 			try {
 				const result = await GETꓽⳇuserinfo(http_client)
-				console.log(result)
 				throw new Error("Should have thrown")
 			} catch (err: HttpClientError) {
 				// correct path but no Auth

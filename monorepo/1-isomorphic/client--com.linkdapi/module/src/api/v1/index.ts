@@ -11,7 +11,7 @@ export function createꓽclient(options?: Immutable<Partial<HttpClientOptions>>)
 	return createꓽHttpClient(BASE_URL, options)
 }
 
-const MAX_COUNT = 50
+export const MAX_COUNT = 50
 
 export async function GETꓽⳇsearchⳇpeople(
 	http_client: LinkdApiV1Client,

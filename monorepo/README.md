@@ -2,35 +2,53 @@
 
 ## Introduction
 
-State of the art monorepo using pnpm 11
+A complete monorepo using pnpm 11 and turbo.
 
-## Prerequisites
+This monorepo is designed to hold several Stock Keeping Units aka. final products (common for startups iterating
+quickly) while allowing to share packages between them. The SKUs can be split in several packages as well for better
+architecture.
 
-- [mise](https://mise.jdx.dev/) — manages Node, pnpm (`curl https://mise.jdx.dev/install.sh | sh`)
+Current available SKUs:
 
-### Environment Variables
+- ["My Subscriptions"](S-skus/%40my-subscriptions/README.md)
 
-Copy the example env file and then edit your values:
+## Installation
 
-```bash
-cp .env.example .env.local   # macOS/Linux
-copy .env.example .env.local # or on Windows
-```
+We use [mise](https://mise.jdx.dev/) to manage the core dev engines: Node, pnpm.
 
-### Install Dependencies
+Install it with `curl https://mise.jdx.dev/install.sh | sh` the `mise install`.
+
+Then install dependencies:
 
 ```bash
 pnpm install
 ```
 
-## Run the Development Server
+## Local execution
+
+See each SKU or package for more details.
+
+But let's be quick:
 
 ```bash
 pnpx turbo --filter @my-subscriptions/app dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+## Contributing
 
-- Click “Go to Dashboard”
-  - If you’re signed out, you’ll be redirected to the embedded sign-in page
-  - After sign-in, you’ll be returned to `/chat`
+See [CONTRIBUTING](%23%23CONTRIBUTING/01-intro.md)
+
+## TODO
+
+- proper TypeScript setup
+  - and fix TypeScript issues
+- A proper linter setup
+  - and fix issues
+- A proper logger + logging strategy
+- mise scripts to clean/update/install/etc.
+- A proper CI/CD
+- A proper release process
+- A proper documentation
+- A proper code style guide
+- A proper testing strategy
+- A proper code coverage strategy

@@ -201,6 +201,9 @@ importers:
       '@clerk/themes':
         specifier: ^2.4.57
         version: 2.4.57(react-dom@19.2.6)(react@19.2.6)
+      '@monorepo-private/assert':
+        specifier: workspace:*
+        version: link:../../../1-isomorphic/assert
       '@monorepo-private/client--com.linkdapi':
         specifier: workspace:*
         version: link:../../../1-isomorphic/client--com.linkdapi

@@ -35,8 +35,10 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 				</div>
 			</SidebarHeader>
 			<SidebarContent className="aui-sidebar-content px-2">
-				<UserAvatar />
-				TODO sth
+				<ol>
+					<li>Connect your social accounts</li>
+					<li>review the analysis</li>
+				</ol>
 			</SidebarContent>
 			<SidebarRail />
 			<SidebarFooter className="aui-sidebar-footer border-t">
