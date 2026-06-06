@@ -10,7 +10,7 @@ import {
 import { createꓽclient as createꓽclientⵧlinkedin, GETꓽⳇuserinfo } from "@monorepo-private/client--com.linkedin.api"
 
 // XXX TEMP DEV, TO CLEAN
-const MOCK_CALLS = true
+const MOCK_CALLS = false
 
 export async function GET() {
 	const ǃ = assert_from({ GET })
