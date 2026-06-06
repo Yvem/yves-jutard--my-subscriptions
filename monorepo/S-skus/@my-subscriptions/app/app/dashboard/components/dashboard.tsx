@@ -68,7 +68,7 @@ export const Dashboard = () => {
 						<div className="flex-1 overflow-y-auto">
 							<div className="mx-auto w-full max-w-3xl px-4 py-8 md:px-6 md:py-10">
 								<div className="mb-8 space-y-1">
-									<h1 className="text-3xl font-semibold tracking-tight">Your digital presence</h1>
+									<h1 className="text-3xl font-semibold tracking-tight">Your digital activity</h1>
 									<p className="text-muted-foreground text-sm">
 										Connect your accounts to map your presence across the web.
 									</p>

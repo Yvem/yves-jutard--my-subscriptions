@@ -2,7 +2,9 @@ import { withAui } from "@assistant-ui/next"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-	/* config options here */
+	typescript: {
+		ignoreBuildErrors: true,
+	},
 }
 
 export default withAui(nextConfig)

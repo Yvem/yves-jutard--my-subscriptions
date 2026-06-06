@@ -36,11 +36,11 @@ export async function GETꓽⳇsearchⳇpeople(
 	}>
 > {
 	const url = Object.entries(params).reduce((url, [k, v]) => {
-		url.searchParams.append(k, v)
+		url.searchParams.append(k, String(v))
 		return url
 	}, new URL("search/people", BASE_URL))
 
-	const response = await http_client.get(url.toString())
+	const response = await http_client.get<any>(url.toString())
 
 	// the search is fuzzy. Prefer exact matches if possible = move them up
 	let people = [...(response.data?.data?.people || [])].sort((pA, pB) => {
@@ -98,7 +98,7 @@ export async function GETꓽⳇpostsⳇall(
 	const url = new URL("posts/all", BASE_URL)
 	url.searchParams.append("urn", params.urn)
 
-	const response = await http_client.get(url.toString())
+	const response = await http_client.get<any>(url.toString())
 	const postsⵧraw = response.data?.data?.posts || []
 
 	// trim
