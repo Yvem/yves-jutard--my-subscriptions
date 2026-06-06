@@ -9,6 +9,7 @@ export function createꓽclient(options?: Immutable<Partial<HttpClientOptions>>)
 	return createꓽHttpClient("https://api.linkedin.com/v2/", options)
 }
 
+// TODO types
 export async function GETꓽⳇuserinfo(http_client: LinkedInV2Client) {
 	const response = await http_client.get("/userinfo")
 	return response.data

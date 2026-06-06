@@ -42,7 +42,7 @@ export async function GETꓽⳇsearchⳇpeople(
 
 	const response = await http_client.get(url.toString())
 
-	// the search is fuzzy. clamp it to exact matches if possible
+	// the search is fuzzy. Prefer exact matches if possible = move them up
 	let people = [...(response.data?.data?.people || [])].sort((pA, pB) => {
 		// no profile picture is an obvious sign the account is not active
 		const profilePictureScoreA = pA.profilePictureURL ? 1 : 0
@@ -86,7 +86,7 @@ interface Post {
 	url: string
 	type: "original" | "reshare"
 	content: string
-	engagements: {}
+	engagements: unknown
 	tms: number
 }
 export async function GETꓽⳇpostsⳇall(

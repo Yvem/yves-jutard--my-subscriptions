@@ -3,8 +3,13 @@
 	"version": "0.0.1",
 	"private": true,
 	"exports": {
-		"./*": "./src/*"
+		".": "./src/index.ts"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"@ai-sdk/openai": "^3.0.67",
+		"ai": "^6.0.193",
+		"vader-sentiment": "catalog:",
+		"zod": "catalog:"
+	},
 	"devDependencies": {}
 }

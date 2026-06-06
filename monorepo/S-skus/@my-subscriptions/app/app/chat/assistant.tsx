@@ -2,9 +2,9 @@
 
 import { Thread } from "@/components/assistant-ui/thread"
 import { ThreadListSidebar } from "@/components/assistant-ui/threadlist-sidebar"
-import { AssistantRuntimeProvider, AssistantCloud } from "@assistant-ui/react"
+import { AssistantRuntimeProvider } from "@assistant-ui/react"
 import { useChatRuntime, AssistantChatTransport } from "@assistant-ui/react-ai-sdk"
-import { useAuth, UserButton, useUser } from "@clerk/nextjs"
+import { UserButton, useUser } from "@clerk/nextjs"
 import {
 	Breadcrumb,
 	BreadcrumbList,
@@ -16,10 +16,8 @@ import {
 import { Separator } from "@my-subscriptions/ui/components/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@my-subscriptions/ui/components/sidebar"
 import { lastAssistantMessageIsCompleteWithToolCalls } from "ai"
-import { useMemo } from "react"
 
 export const Assistant = () => {
-	const { getToken } = useAuth()
 	const { user } = useUser()
 
 	const runtime = useChatRuntime({

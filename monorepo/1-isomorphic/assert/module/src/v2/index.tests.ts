@@ -1,6 +1,6 @@
 import { expect } from "chai"
 
-import { assert, assertⵧpre, require, assertⵧpost, ensure, assert_from } from "@monorepo-private/assert"
+import { assert, require, ensure, assert_from } from "@monorepo-private/assert"
 import * as ǃ from "@monorepo-private/assert"
 
 /////////////////////////////////////////////////

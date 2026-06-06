@@ -1,5 +1,4 @@
 import { GitHubIcon } from "@/components/icons/github"
-import { UserAvatar } from "@clerk/nextjs"
 import {
 	Sidebar,
 	SidebarContent,

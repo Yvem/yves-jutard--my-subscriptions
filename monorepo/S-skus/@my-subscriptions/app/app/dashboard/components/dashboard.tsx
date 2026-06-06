@@ -23,7 +23,7 @@ import { ConnectExternalAccountButton, ExternalAccount, type ExternalAccountReso
 import { LinkedInSection, postsⵧtoⵧheatPoints, type LinkedInData } from "./linkedin"
 import { DashboardSidebar } from "./sidebar"
 
-export const DashboardClient = () => {
+export const Dashboard = () => {
 	const { user } = useUser()
 
 	const runtime = useChatRuntime({
@@ -66,7 +66,6 @@ export const DashboardClient = () => {
 						</header>
 
 						<div className="flex-1 overflow-y-auto">
-							{/*<Thread />*/}
 							<div className="mx-auto w-full max-w-3xl px-4 py-8 md:px-6 md:py-10">
 								<div className="mb-8 space-y-1">
 									<h1 className="text-3xl font-semibold tracking-tight">Your digital presence</h1>
@@ -75,11 +74,6 @@ export const DashboardClient = () => {
 									</p>
 								</div>
 								<Results />
-								{false && (
-									<small>
-										<pre>{JSON.stringify(user, undefined, 2)}</pre>
-									</small>
-								)}
 							</div>
 						</div>
 					</SidebarInset>
@@ -129,6 +123,7 @@ function Results() {
 					<ConnectExternalAccountButton strategy="oauth_github" label="Connect GitHub" />
 				)}
 				{external_accounts.has("github") && <ExternalAccount ea={external_accounts.get("github")!} />}
+				{external_accounts.has("github") && <p>GitHub content is not implemented. Please try LinkedIn instead.</p>}
 			</section>
 		</div>
 	)

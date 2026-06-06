@@ -1,6 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
+// TODO should be the opposite: allowlist
 const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/dashboard(.*)", "/api(.*)"])
 
 /**

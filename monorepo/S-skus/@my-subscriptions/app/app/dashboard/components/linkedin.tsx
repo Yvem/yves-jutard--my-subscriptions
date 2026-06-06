@@ -1,12 +1,19 @@
 "use client"
 
+import {
+	analyzerⵧvader,
+	type AnalyzerName,
+	type Sentiment,
+	type SentimentLabel,
+} from "@my-subscriptions/sentiment-analysis"
 import { Skeleton } from "@my-subscriptions/ui/components/skeleton"
 import type { DataPoint } from "heat-graph"
 import { useEffect, useState } from "react"
 
 import { ConnectExternalAccountButton, ExternalAccount, type ExternalAccountResource } from "./external-account"
-import { analyzers, type AnalyzerName, type Sentiment, type SentimentLabel } from "./sentiment"
+import { analyzerⵧllm } from "./llm-sentiment-analyzer"
 
+const analyzers = [analyzerⵧvader, analyzerⵧllm]
 export type LinkedInPost = {
 	url: string
 	type: "original" | "reshare"
@@ -152,8 +159,9 @@ function useSentiments(text: string): Map<AnalyzerName, SentimentResult> {
 }
 
 function PostSentiment({ results }: { results: Map<AnalyzerName, SentimentResult> }) {
+	console.log(results)
 	return (
-		<aside className="bg-muted/40 flex w-40 shrink-0 flex-col gap-2 rounded-lg border p-3 text-xs">
+		<aside className="bg-muted/40 flex flex-1 shrink-0 flex-col gap-2 rounded-lg border p-3 text-xs">
 			<span className="text-muted-foreground font-medium">Sentiment</span>
 			<ul className="flex flex-col gap-1.5">
 				{analyzers.map(({ name }) => (
@@ -166,21 +174,36 @@ function PostSentiment({ results }: { results: Map<AnalyzerName, SentimentResult
 
 function SentimentRow({ name, result }: { name: AnalyzerName; result?: SentimentResult }) {
 	return (
-		<li className="flex items-center justify-between gap-2">
-			<span className="text-muted-foreground text-[10px] uppercase tracking-wide">{name}</span>
-			{result === undefined ? (
-				<span className="text-muted-foreground opacity-70">…</span>
-			) : "error" in result ? (
-				<span className="text-destructive font-medium" title={result.error}>
-					failed
-				</span>
-			) : (
-				<span className={`font-medium ${sentimentColor[result.label]}`}>
-					{sentimentEmoji[result.label]} {result.score.toFixed(2)}
-				</span>
+		<li>
+			<div className="flex items-center justify-between gap-2">
+				<span className="text-muted-foreground text-[10px] uppercase tracking-wide">{name}</span>
+				{result === undefined ? (
+					<span className="text-muted-foreground opacity-70">…</span>
+				) : "error" in result ? (
+					<span className="text-destructive font-medium" title={result.error}>
+						failed
+					</span>
+				) : (
+					<>
+						<span className={`font-medium ${sentimentColor[result.label]}`} title={sentimentDetail(result)}>
+							{"performativeNegativity" in result && result.performativeNegativity ? "🎭 " : ""}
+							{sentimentEmoji[result.label]} {result.score.toFixed(2)}
+						</span>
+					</>
+				)}
+			</div>
+			{"rationale" in (result || {}) && (
+				<span className={`font-medium ${sentimentColor[result?.label]}`}>{result.rationale}</span>
 			)}
 		</li>
 	)
+}
+
+// LLM results carry a rationale; expose it (plus confidence) on hover. VADER has none.
+function sentimentDetail(sentiment: Sentiment): string | undefined {
+	if (!("rationale" in sentiment)) return undefined
+	const performative = sentiment.performativeNegativity ? " · performative negativity" : ""
+	return `${sentiment.rationale} (confidence ${sentiment.confidence.toFixed(2)}${performative})`
 }
 
 const sentimentEmoji: Record<SentimentLabel, string> = { positive: "🙂", neutral: "😐", negative: "🙁" }
