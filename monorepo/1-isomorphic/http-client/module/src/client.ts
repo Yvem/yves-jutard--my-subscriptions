@@ -15,7 +15,7 @@ const DEFAULT_TIMEOUT_MS = 30_000
 type MethodOptions<T = unknown> = Omit<RequestOptions<T>, "method">
 
 export interface HttpClient {
-	request<T>(path: string, options: RequestOptions<T>): Promise<HttpResponse<T>>
+	request<T>(path: string, options?: RequestOptions<T>): Promise<HttpResponse<T>>
 
 	get<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>>
 	post<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>>
@@ -155,23 +155,23 @@ export function createꓽHttpClient(
 	}
 
 	return {
-		request<T>(path: string, requestOptions: RequestOptions<T>): Promise<HttpResponse<T>> {
+		request<T>(path: string, requestOptions: RequestOptions<T> = {}): Promise<HttpResponse<T>> {
 			const { method = "GET", ...method_options } = requestOptions
 			return _execute_request<T>(path, method, method_options)
 		},
-		get<T>(path: string, options: MethodOptions<T>): Promise<HttpResponse<T>> {
+		get<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>> {
 			return _execute_request<T>(path, "GET", options)
 		},
-		post<T>(path: string, options: MethodOptions<T>): Promise<HttpResponse<T>> {
+		post<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>> {
 			return _execute_request<T>(path, "POST", options)
 		},
-		put<T>(path: string, options: MethodOptions<T>): Promise<HttpResponse<T>> {
+		put<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>> {
 			return _execute_request<T>(path, "PUT", options)
 		},
-		patch<T>(path: string, options: MethodOptions<T>): Promise<HttpResponse<T>> {
+		patch<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>> {
 			return _execute_request<T>(path, "PATCH", options)
 		},
-		delete<T>(path: string, options: MethodOptions<T>): Promise<HttpResponse<T>> {
+		delete<T>(path: string, options?: MethodOptions<T>): Promise<HttpResponse<T>> {
 			return _execute_request<T>(path, "DELETE", options)
 		},
 	}

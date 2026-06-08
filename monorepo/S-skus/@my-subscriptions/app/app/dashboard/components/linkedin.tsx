@@ -159,7 +159,6 @@ function useSentiments(text: string): Map<AnalyzerName, SentimentResult> {
 }
 
 function PostSentiment({ results }: { results: Map<AnalyzerName, SentimentResult> }) {
-	console.log(results)
 	return (
 		<aside className="bg-muted/40 flex flex-1 shrink-0 flex-col gap-2 rounded-lg border p-3 text-xs">
 			<span className="text-muted-foreground font-medium">Sentiment</span>

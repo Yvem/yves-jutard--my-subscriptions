@@ -47,7 +47,7 @@ describe(`LinkedIn API v2`, function () {
 				// correct path but no Auth
 				expect(err).to.have.deep.property(
 					"url",
-					"https://linkdapi.com/api/v1/search/people?urn=ACoAAABCMjsBlsnsypQrujQIErVuOdIdbCIH5O0",
+					"https://linkdapi.com/api/v1/posts/all?urn=ACoAAABCMjsBlsnsypQrujQIErVuOdIdbCIH5O0",
 				)
 				expect(err).to.have.deep.property("status", 403)
 			}

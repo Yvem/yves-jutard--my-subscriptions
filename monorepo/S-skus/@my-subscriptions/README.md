@@ -8,6 +8,12 @@ An app extracting content from third-party accounts and performing sentiment ana
 
 Perform the monorepo install steps (See root README.md)
 
+## API keys
+
+- clerk
+- https://linkdapi.com/dash
+- https://platform.openai.com/api-keys
+
 ## Run the Development Server
 
 ```bash

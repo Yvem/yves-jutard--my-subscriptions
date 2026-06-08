@@ -272,7 +272,7 @@ function _on_failure(context: Context): never {
 	let { caller, caller__name, object_under_check__name, assertion, assertion_description, error } = context
 
 	if (isꓽprod) {
-		throw !error // no details
+		throw error // no details
 	}
 
 	const message__body__assertion = (() => {

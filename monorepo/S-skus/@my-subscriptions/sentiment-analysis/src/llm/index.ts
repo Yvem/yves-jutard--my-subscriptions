@@ -2,20 +2,23 @@ import { openai } from "@ai-sdk/openai"
 import { generateObject } from "ai"
 import { z } from "zod"
 
-import type { Analyzer, SentimentExtended } from "../types"
+import { Analyzer, Sentiment } from "../types"
 
 // LLM runs server-side behind the sentiment endpoint. Results are cached in
 // localStorage (keyed by text) so dev refreshes don't re-pay for the same posts.
 export const analyzerⵧllm: Analyzer = {
 	name: "llm",
-	analyze: async (text): Promise<SentimentExtended> => {
+	analyze: async (text): Promise<Sentiment> => {
 		const { object } = await generateObject({
 			model: MODEL,
 			schema,
 			system: RUBRIC,
 			prompt: text,
 		})
-		return object
+		return {
+			analyzer: "llm",
+			...object,
+		}
 	},
 }
 

@@ -4,9 +4,9 @@
 
 A complete monorepo using pnpm 11 and turbo.
 
-This monorepo is designed to hold several Stock Keeping Units aka. final products (common for startups iterating
-quickly) while allowing to share packages between them. The SKUs can be split in several packages as well for better
-architecture.
+This monorepo is designed to hold several "Stock Keeping Units" aka. final products (common for startups iterating
+quickly) while allowing to share and compound packages between them. The SKUs can be split in several packages as well
+for better architecture.
 
 Current available SKUs:
 
@@ -40,7 +40,13 @@ See [CONTRIBUTING](%23%23CONTRIBUTING/01-intro.md)
 
 ## TODO
 
-- proper TypeScript setup
+- LLM productionization:
+  - deterministic guardrails on the LLM endpoint = size limit, no system in body
+  - tracing (ex langsmith)
+  - rate/cost limiting
+  - guardrails
+  - evals
+- TypeScript setup
   - and fix TypeScript issues
 - A proper linter setup
   - and fix issues
