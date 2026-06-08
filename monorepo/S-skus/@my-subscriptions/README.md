@@ -10,9 +10,7 @@ Perform the monorepo install steps (See root README.md)
 
 ## API keys
 
-- clerk
-- https://linkdapi.com/dash
-- https://platform.openai.com/api-keys
+Copy and fill [.env.example](app/.env.example)
 
 ## Run the Development Server
 
@@ -25,3 +23,4 @@ Open http://localhost:3000 with your browser to see the result.
 - Click “Go to Dashboard”
   - If you’re signed out, you’ll be redirected to the embedded sign-in page
   - After sign-in, you’ll be returned to `/dashboard`
+  - Connect LinkedIn (if not already) to get a sentiment analysis of your last posts

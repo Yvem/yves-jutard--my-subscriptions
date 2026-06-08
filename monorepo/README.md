@@ -42,13 +42,16 @@ See [CONTRIBUTING](%23%23CONTRIBUTING/01-intro.md)
 
 - LLM productionization:
   - deterministic guardrails on the LLM endpoint = size limit, no system in body
-  - tracing (ex langsmith)
   - rate/cost limiting
-  - guardrails
-  - evals
+  - tracing (e.g. langsmith)
+  - switch to a provider agnostic client (e.g. langchain)
+  - more guardrails
+- evals to test the prompts + keep them good if we change the model
 - TypeScript setup
   - and fix TypeScript issues
-- A proper linter setup
+- Unit test setup
+  - there are a few unit tests but the plumbing to run them is not set
+- linter setup
   - and fix issues
 - A proper logger + logging strategy
 - mise scripts to clean/update/install/etc.
@@ -56,5 +59,4 @@ See [CONTRIBUTING](%23%23CONTRIBUTING/01-intro.md)
 - A proper release process
 - A proper documentation
 - A proper code style guide
-- A proper testing strategy
 - A proper code coverage strategy
