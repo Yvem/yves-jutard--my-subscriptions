@@ -4,6 +4,8 @@
 
 An app extracting content from third-party accounts and performing sentiment analysis on them.
 
+Live version at https://my-subscriptions.yves.jutard.com/
+
 ## Installation
 
 Perform the monorepo install steps (See root README.md)
